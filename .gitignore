@@ -7,7 +7,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Production builds
-dist/
+# dist/
 build/
 .next/
 .nuxt/
@@ -89,7 +89,7 @@ jspm_packages/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist
 
 # Gatsby files
 .cache/
