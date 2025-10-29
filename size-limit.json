@@ -1,0 +1,26 @@
+[
+  {
+    "name": "JavaScript Bundle",
+    "path": "dist/assets/*.js",
+    "limit": "200 kB",
+    "gzip": true
+  },
+  {
+    "name": "CSS Bundle",
+    "path": "dist/assets/*.css",
+    "limit": "50 kB",
+    "gzip": true
+  },
+  {
+    "name": "HTML Document",
+    "path": "dist/index.html",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Total Bundle Size",
+    "path": "dist/**/*.{js,css,html}",
+    "limit": "300 kB",
+    "gzip": true
+  }
+]

@@ -1,0 +1,9 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#8C421E"/>
+  <path d="M100 200L200 100L400 100L500 200L400 300L200 300Z" fill="#E8DACB" opacity="0.9"/>
+  <circle cx="300" cy="200" r="60" fill="#B66C48" opacity="0.8"/>
+  <text x="300" y="360" font-family="Inter" font-size="18" fill="#E8DACB" text-anchor="middle" font-weight="600">
+    Loja Conceito
+  </text>
+</svg>
+

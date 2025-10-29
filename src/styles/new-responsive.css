@@ -1,0 +1,387 @@
+/* ==========================================================================
+   RESPONSIVE.CSS - Mobile-First Responsive Design
+   ========================================================================== */
+
+/* Mobile Styles (Default - Base) */
+/* Estilos base já são mobile-first no base.css */
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+  /* Typography Adjustments */
+  :root {
+    --font-size-4xl: 2.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-2xl: 1.75rem;
+    --space-32: 5rem;
+    --space-24: 4rem;
+    --space-16: 3rem;
+  }
+
+  /* Navigation */
+  .nav__menu {
+    gap: var(--space-4);
+  }
+
+  .nav__link {
+    font-size: var(--font-size-xs);
+  }
+
+  /* Hero */
+  .hero__container {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .hero__visual {
+    order: -1;
+  }
+
+  .hero__content {
+    text-align: center;
+  }
+
+  .hero__trust {
+    justify-content: center;
+  }
+
+  /* About */
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .about__content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .about__features {
+    align-items: center;
+  }
+
+  /* Services */
+  .services__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  /* Portfolio */
+  .portfolio__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio__item--large,
+  .portfolio__item--wide {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  /* Process */
+  .process__timeline {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  /* Contact */
+  .contact__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .contact__info {
+    position: static;
+    text-align: center;
+  }
+
+  .contact__details {
+    align-items: center;
+  }
+
+  .contact__social {
+    justify-content: center;
+  }
+
+  /* Footer */
+  .footer__container {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  /* Root Variables */
+  :root {
+    --font-size-4xl: 2rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.5rem;
+    --space-32: 4rem;
+    --space-24: 3rem;
+    --space-16: 2rem;
+    --container-padding: var(--space-4);
+  }
+
+  /* Navigation */
+  .nav__container {
+    padding: var(--space-4);
+  }
+
+  .nav__logo {
+    font-size: var(--font-size-lg);
+  }
+
+  .nav__menu {
+    gap: var(--space-3);
+  }
+
+  .nav__link--cta {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: auto;
+    padding: calc(var(--header-height) + var(--space-8)) var(--space-4) var(--space-12);
+  }
+
+  .hero__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero__subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .hero__trust {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .hero__trust-divider {
+    display: none;
+  }
+
+  .hero__trust-number {
+    font-size: var(--font-size-lg);
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+
+  /* About */
+  .about {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .about__stat {
+    position: static;
+    margin-top: var(--space-6);
+  }
+
+  /* Services */
+  .services {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .service {
+    padding: var(--space-6);
+  }
+
+  .service__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Portfolio */
+  .portfolio {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .portfolio__grid {
+    gap: var(--space-4);
+  }
+
+  /* Process */
+  .process {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .process__step-number {
+    width: 48px;
+    height: 48px;
+    font-size: var(--font-size-lg);
+  }
+
+  /* Contact */
+  .contact {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .contact__form-wrapper {
+    padding: var(--space-6);
+  }
+
+  .contact__detail {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Footer */
+  .footer {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .footer__links {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+/* Desktop Large - 1440px+ */
+@media (min-width: 1440px) {
+  :root {
+    --container-max: 1440px;
+    --font-size-5xl: 6.5rem;
+    --font-size-4xl: 5rem;
+  }
+
+  .hero__decoration {
+    width: 70%;
+    height: 70%;
+  }
+
+  .service {
+    padding: var(--space-12);
+  }
+
+  .portfolio__grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+/* Landscape Mode Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: calc(var(--header-height) + var(--space-8)) var(--container-padding) var(--space-8);
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+
+  .hero__image-wrapper {
+    aspect-ratio: 3/4;
+  }
+}
+
+/* Print Styles */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  .nav,
+  .footer,
+  .hero__scroll,
+  .btn {
+    display: none !important;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  /* Uncomment to enable dark mode */
+  /*
+  :root {
+    --color-white: #1a1a1a;
+    --color-gray-50: #2a2a2a;
+    --color-gray-100: #3a3a3a;
+    --color-gray-900: #f5f5f5;
+    --color-black: #ffffff;
+  }
+  */
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow-xl: none;
+    --shadow-2xl: none;
+  }
+
+  .btn,
+  .service,
+  .portfolio__item {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger tap targets for mobile */
+  .nav__link,
+  .btn,
+  .contact__social-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Remove hover effects on touch devices */
+  .card:hover,
+  .service:hover,
+  .portfolio__item:hover {
+    transform: none;
+  }
+
+  /* Show overlays by default on touch */
+  .portfolio__overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  }
+}
