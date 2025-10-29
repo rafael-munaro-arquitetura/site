@@ -3,7 +3,8 @@
  * Gerencia o comportamento do header responsivo
  */
 
-import { dom, time } from '../js/utils.js';
+import { dom } from '../js/utils.js';
+import { debounce, throttle } from '../utils/helpers.js';
 
 export class HeaderComponent {
   constructor(options = {}) {
@@ -54,12 +55,12 @@ export class HeaderComponent {
     }
 
     // Scroll events (throttled)
-    window.addEventListener('scroll', time.throttle(() => {
+    window.addEventListener('scroll', throttle(() => {
       this.handleScroll();
     }, 10));
 
     // Resize events (debounced)
-    window.addEventListener('resize', time.debounce(() => {
+    window.addEventListener('resize', debounce(() => {
       this.handleResize();
     }, 250));
 

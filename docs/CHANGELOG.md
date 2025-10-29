@@ -130,6 +130,47 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 
 **ESSAS SÃO REGRAS HISTÓRICAS ABSOLUTAS - VIOLAÇÃO COMPROMETE A INTEGRIDADE HISTÓRICA DO PROJETO.**
 
+## [2.1.3] - 2025-10-29
+
+### 🐛 Corrigido
+
+#### 🚨 Problema Crítico #1: ReferenceError nos Componentes Header e Navigation
+
+**Root Cause Identificado:**
+- Componentes `header.js` e `navigation.js` tentavam usar `time.throttle()` e `time.debounce()`
+- Objeto `time` não continha essas funções (foram movidas para `src/utils/helpers.js` na v2.1.0)
+- Resultado: ReferenceError imediato quebrando navegação responsiva e header sticky
+
+**Solução Implementada:**
+- ✅ **Imports Corretos**: Adicionados `import { debounce, throttle } from '../utils/helpers.js';`
+- ✅ **Uso Direto das Funções**: Removido prefixo `time.` (agora `throttle()` e `debounce()`)
+- ✅ **Centralização Mantida**: Respeita arquitetura centralizada da v2.1.0
+
+**Arquivos Corrigidos:**
+```javascript
+// ❌ ANTES (quebrado)
+import { dom, time } from '../js/utils.js';
+window.addEventListener('scroll', time.throttle(() => {...}, 10));
+
+// ✅ DEPOIS (funcionando)
+import { dom } from '../js/utils.js';
+import { debounce, throttle } from '../utils/helpers.js';
+window.addEventListener('scroll', throttle(() => {...}, 10));
+```
+
+**Impacto da Correção:**
+- ✅ Navegação mobile agora funciona corretamente
+- ✅ Header sticky ativado/desativado adequadamente no scroll
+- ✅ Resize handlers funcionam para adaptação responsiva
+- ✅ JavaScript não para de executar nos componentes
+- ✅ Experiência do usuário completamente restaurada
+
+**Validação Técnica:**
+- ✅ Linting passou sem erros de referência
+- ✅ Imports validados em ambos os arquivos
+- ✅ Funções usadas corretamente (sem prefixo `time.`)
+- ✅ Arquitetura centralizada mantida
+
 ## [2.1.2] - 2025-10-29
 
 ### 📋 Regras Absolutas Adicionais - Organização e Estrutura
@@ -137,6 +178,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 #### Implementado
 
 ##### 🚨 Sistema de Regras Absolutas Expandido
+
 - **Regra 1 implementada**: Priorização obrigatória de melhores práticas organizacionais em TODO código
 - **Regra 2 implementada**: Proibição absoluta de criação de novos arquivos informativos
 - **Regra 3 implementada**: Localização definitiva e imutável do `index.html` na raiz
@@ -144,6 +186,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 - **Reforço organizacional**: Ênfase em estrutura clara, padronização e localização ideal
 
 ##### 📋 Regras por Documento:
+
 - **INFO.md**: Regras gerais de organização organizacional
 - **AGENTS.md**: Prioridade absoluta em organização para agentes
 - **ARCHITECTURE.md**: Excelência organizacional arquitetural
@@ -152,6 +195,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 - **README.md**: Organização profissional executiva
 
 ##### 🛡️ Mecanismos de Proteção:
+
 - **Proibição de criação**: Nenhum novo arquivo informativo pode ser criado
 - **Imutabilidade sagrada**: `README.md` (raiz) e `INFO.md` nunca alterados
 - **Localização fixa**: `index.html` sempre na pasta pai (raiz)

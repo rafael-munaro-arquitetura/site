@@ -3,7 +3,8 @@
  * Gerencia navegação, breadcrumbs e indicações visuais
  */
 
-import { dom, time } from '../js/utils.js';
+import { dom } from '../js/utils.js';
+import { debounce, throttle } from '../utils/helpers.js';
 
 export class NavigationComponent {
   constructor(options = {}) {
@@ -54,12 +55,12 @@ export class NavigationComponent {
 
   bindEvents() {
     // Scroll event to update active section (throttled)
-    window.addEventListener('scroll', time.throttle(() => {
+    window.addEventListener('scroll', throttle(() => {
       this.updateActiveSection();
     }, this.options.updateInterval));
 
     // Resize event to recalculate section positions
-    window.addEventListener('resize', time.debounce(() => {
+    window.addEventListener('resize', debounce(() => {
       this.recalculateSections();
     }, 250));
 
