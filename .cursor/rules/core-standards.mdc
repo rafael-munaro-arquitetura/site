@@ -1,0 +1,51 @@
+---
+description: Padrões fundamentais que devem sempre ser seguidos em todo o projeto
+globs: ['**/*.{html,css,js}']
+alwaysApply: true
+---
+
+# 🏗️ Padrões Fundamentais (SEMPRE Aplicados)
+
+## HTML - Estrutura Semântica (OBRIGATÓRIO)
+
+- **SEMPRE** use HTML5 semântico: `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`
+- **NUNCA** use `<div>` quando existe elemento semântico apropriado
+- **SEMPRE** inclua ARIA labels quando necessário (`aria-label`, `aria-labelledby`)
+- **SEMPRE** use IDs únicos para headings principais
+- **SEMPRE** inclua atributo `alt` descritivo em TODAS as imagens
+
+## CSS - Metodologia BEM (OBRIGATÓRIA)
+
+- **SEMPRE** use BEM para nomenclatura:
+  ```css
+  .component {
+  } /* Bloco */
+  .component__element {
+  } /* Elemento */
+  .component--modifier {
+  } /* Modificador */
+  ```
+- **SEMPRE** use variáveis CSS para valores reutilizáveis
+- **NUNCA** use `!important` (exceto em utilitários específicos)
+- **SEMPRE** agrupe propriedades logicamente
+- **SEMPRE** use rem para tamanhos de fonte
+
+## JavaScript - Padrões Modernos (OBRIGATÓRIOS)
+
+- **SEMPRE** use ES6+: `const`/`let`, arrow functions, async/await
+- **SEMPRE** importe utilitários centralizados de `../utils/helpers.js`
+- **NUNCA** redefina `debounce` ou `throttle` localmente
+- **SEMPRE** use optional chaining (`?.`) para acesso seguro
+- **SEMPRE** use template literals para strings dinâmicas
+
+## Performance - Prioridades Críticas
+
+- **SEMPRE** use lazy loading para imagens abaixo da dobra
+- **SEMPRE** otimize animações Canvas (60fps, pausa em tabs ocultas)
+- **SEMPRE** respeite `prefers-reduced-motion`
+
+## Acessibilidade - WCAG 2.1 AA (OBRIGATÓRIA)
+
+- **SEMPRE** mantenha contraste adequado (4.5:1 mínimo)
+- **SEMPRE** garanta navegação completa por teclado
+- **SEMPRE** use skip links para navegação rápida

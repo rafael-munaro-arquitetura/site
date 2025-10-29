@@ -19,7 +19,7 @@ export const generateId = (prefix = 'id') => {
  * @param {string} text - Texto a ser copiado
  * @returns {Promise<boolean>} Sucesso da operação
  */
-export const copyToClipboard = async (text) => {
+export const copyToClipboard = async(text) => {
   try {
     await navigator.clipboard.writeText(text);
     return true;
@@ -217,6 +217,7 @@ export const isElementInViewport = (element, threshold = 0.1) => {
 
 /**
  * Anima scroll suave para elemento
+ * NOTA: Usa scroll-behavior: smooth do CSS para melhor performance
  * @param {Element|string} element - Elemento ou seletor
  * @param {number} offset - Offset adicional em pixels
  */
@@ -228,8 +229,10 @@ export const scrollToElement = (element, offset = 0) => {
   const elementPosition = el.offsetTop;
   const offsetPosition = elementPosition - offset;
 
+  // Usa scroll nativo que respeita scroll-behavior: smooth do CSS
   window.scrollTo({
     top: offsetPosition,
+    // behavior é redundante se CSS já tem scroll-behavior: smooth, mas mantém compatibilidade
     behavior: 'smooth'
   });
 };

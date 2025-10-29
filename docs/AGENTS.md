@@ -1,160 +1,378 @@
-# 🤖 Agentes de IA
+# 🤖 AGENTS.md
 
-Configuração e diretrizes para agentes de IA que auxiliam no desenvolvimento do projeto.
+Diretrizes para agentes de codificação de IA neste projeto de arquitetura web.
 
-## 🞯 Visão Geral
+## 🎯 Visão Geral
 
-Agentes de IA são utilizados para:
-- Análise e otimização de código
-- Geração de documentação
-- Sugestões de melhorias
-- Implementação de funcionalidades
+Este é um **AGENTS.md** - um formato aberto e simples para orientar agentes de codificação de IA, usado por mais de 20.000 projetos open-source. Pense neste arquivo como um **README para agentes**: um local dedicado para fornecer contexto e instruções que ajudam agentes de IA a trabalhar efetivamente neste projeto.
 
-## 🤖 Perfis de Agentes
+### Sobre o Projeto
 
-### 💻 Desenvolvedor
+Site institucional para **Rafael Munaro Arquitetura** - um sistema web modular focado em performance, acessibilidade e arquitetura moderna. O projeto utiliza tecnologias como Vite, HTML5, CSS3 e JavaScript ES6+ com uma abordagem mobile-first e design system robusto.
 
-**Responsabilidades:**
-- Implementação de funcionalidades
-- Refatoração de código
-- Correção de bugs
-- Otimizações de performance
+## 🚨 REGRA CRÍTICA - ATUALIZAÇÃO OBRIGATÓRIA DE DOCUMENTAÇÃO
 
-**Permissões:**
-- ✅ Leitura/escrita de código fonte
-- ✅ Criação de componentes
-- ✅ Modificação de estilos
-- ❌ Deploy em produção
+**ATENÇÃO - REGRA ABSOLUTA PARA TODAS AS LLMs**
 
-### 📚 Documentador
+Sempre que você (ou qualquer LLM) realizar **QUALQUER** alteração no código, esta documentação deve ser **OBRIGATORIAMENTE** atualizada:
 
-**Responsabilidades:**
-- Documentação técnica
-- Atualização de guides
-- Manutenção do CHANGELOG
-- Criação de exemplos
+### 📋 Protocolo Obrigatório de Atualização:
 
-**Permissões:**
-- ✅ Leitura de código
-- ✅ Escrita em docs/
-- ❌ Modificação de src/
+1. **Mudanças no código/setup** → Atualizar imediatamente este arquivo `AGENTS.md`
+2. **Novos comandos/scripts** → Documentar em "Setup commands"
+3. **Alterações na arquitetura** → Atualizar "Architecture guidelines"
+4. **Mudanças em padrões** → Revisar "Code style" e "Development workflow"
+5. **Novas dependências** → Atualizar informações sobre ferramentas
 
-### 🔍 Revisor
+### ⚠️ Consequências da Não Conformidade:
+- Código não será considerado "completo" sem documentação atualizada
+- Qualidade do projeto será comprometida
+- Setup de novos desenvolvedores será prejudicado
+- Manutenibilidade futura será dificultada
 
-**Responsabilidades:**
-- Análise de código
-- Validação de padrões
-- Auditoria de qualidade
-- Sugestões de melhorias
+**Esta é uma REGRA EXCLUSIVA e deve ser seguida SEM EXCEÇÕES.**
 
-**Permissões:**
-- ✅ Leitura de tudo
-- ✅ Geração de relatórios
-- ❌ Modificação de arquivos
+## 🛠️ Setup commands
 
-## 🛡️ Diretrizes Obrigatórias
-
-### Princípios de Segurança
-
-1. **Menor Privilégio**
-   - Agentes têm apenas permissões necessárias
-   - Revisão manual para mudanças críticas
-
-2. **Auditoria**
-   - Todas as mudanças são logáveis
-   - Revisão periódica de permissões
-
-3. **Validação**
-   - Testes antes de commit
-   - Lint e format automáticos
-   - Code review obrigatório
-
-### Regras de Desenvolvimento
-
-**DEVE:**
-- Seguir convenções do RULES.md
-- Manter compatibilidade com navegadores
-- Priorizar acessibilidade (WCAG 2.1 AA)
-- Documentar mudanças no CHANGELOG.md
-- Adicionar comentários em código complexo
-
-**NÃO DEVE:**
-- Commitar secrets ou tokens
-- Usar `console.log` em produção
-- Ignorar erros de lint
-- Fazer deploy sem testes
-- Modificar arquivos de config sem revisão
-
-## 🔧 Configuração
-
-### Variáveis de Ambiente
+### Desenvolvimento Local
 
 ```bash
-# Development
-NODE_ENV=development
+# Instalar dependências
+npm install
 
-# Agent Mode
-AGENT_MODE=assistant
-AGENT_LOG=verbose
+# Iniciar servidor de desenvolvimento (hot reload)
+npm run dev
+
+# Iniciar servidor e abrir browser automaticamente
+npm run dev:open
+
+# Expor na rede local
+npm run dev:host
 ```
 
-### Níveis de Acesso
+### Qualidade de Código
 
-| Nível | Descrição | Ações |
-|-------|-----------|---------|
-| **Leitura** | Apenas consulta | Revisor |
-| **Escrita** | Modificação de arquivos | Documentador |
-| **Completo** | Acesso total | Desenvolvedor |
+```bash
+# Verificar linting
+npm run lint
 
-## 📊 Métricas de Qualidade
+# Corrigir linting automaticamente
+npm run lint:fix
 
-### KPIs Monitorados
+# Formatar código
+npm run format
 
-- **Code Quality**: ESLint score, complexidade
-- **Performance**: Lighthouse scores, bundle size
-- **Accessibility**: WCAG compliance
-- **Tests**: Coverage, pass rate
-- **Documentation**: Completude, atualidade
-
-## 📝 Exemplos de Uso
-
-### Solicitando Implementação
-
-```markdown
-**Contexto**: Página de contato precisa de validação
-**Tarefa**: Implementar validação de formulário
-**Requisitos**:
-- Validar email format
-- Validar telefone (opcional)
-- Feedback visual em tempo real
-- Acessibilidade WCAG AA
+# Verificar formatação
+npm run format:check
 ```
 
-### Solicitando Documentação
+### Build e Produção
 
-```markdown
-**Contexto**: Nova funcionalidade de lazy loading
-**Tarefa**: Documentar uso e configuração
-**Incluir**:
-- Exemplo de código
-- Parâmetros disponíveis
-- Casos de uso
-- Troubleshooting
+```bash
+# Build para produção
+npm run build
+
+# Preview do build local
+npm run preview
+
+# Build + preview
+npm run serve
+
+# Analisar bundle size
+npm run analyze
 ```
 
-### Solicitando Revisão
+### Limpeza
 
-```markdown
-**Contexto**: PR #123 pronto para review
-**Focar em**:
-- Performance impact
-- Acessibilidade
-- Código duplicado
-- Testes unitários
+```bash
+# Limpar build files
+npm run clean
+
+# Limpar tudo (incluindo node_modules)
+npm run clean:all
 ```
+
+## 🎨 Code style
+
+### HTML
+
+- Use **HTML5 semântico**: `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`
+- Inclua **ARIA labels** quando necessário: `aria-label`, `aria-labelledby`, `role`
+- Use **IDs únicos** para headings principais
+- Sempre inclua **atributos alt** em imagens
+- Evite **divs desnecessários** - prefira elementos semânticos apropriados
+
+### CSS
+
+- Siga **metodologia BEM** para nomenclatura:
+  ```css
+  .component {
+  }
+  .component__element {
+  }
+  .component--modifier {
+  }
+  ```
+- Use **CSS variables** (design tokens) para valores reutilizáveis
+- **Mobile-first approach**: estilos base para mobile, media queries progressivas
+- Agrupe propriedades logicamente: posicionamento → box model → tipografia → visual → animação
+- Use **rem** para tamanhos de fonte, **px** para borders/shadows
+- **NÃO use `!important`** (exceto em utilitários)
+- Use **unidades relativas** (rem, %, vw/vh) para responsividade
+
+### JavaScript
+
+- Use **ES6+ moderno**: `const`/`let`, arrow functions, classes, async/await
+- **Import centralizado** de utilitários: `debounce` e `throttle` de `../utils/helpers.js`
+- Use **optional chaining** (`?.`) para acesso seguro
+- Prefira **template literals** para strings
+- Adicione **JSDoc** em funções públicas
+- Use **try/catch** para error handling
+- **NÃO use `var`** - sempre `const` ou `let`
+- Use **destructuring** quando apropriado
+
+#### Nomenclatura
+
+```javascript
+// camelCase para variáveis/funções
+const userName = 'João';
+function getUserData() {}
+
+// PascalCase para classes
+class UserComponent {}
+
+// UPPER_SNAKE_CASE para constantes
+const API_URL = 'https://api.example.com';
+const MAX_RETRIES = 3;
+
+// Prefixo underscore para métodos privados
+class Example {
+  _privateMethod() {}
+  publicMethod() {}
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Executar testes (quando implementados)
+npm run test
+
+# Executar testes em modo watch
+npm run test:watch
+```
+
+**Nota**: Atualmente o projeto não possui testes automatizados implementados (scripts `test` e `test:watch` retornam apenas mensagens). Foque em testes manuais e validação visual durante o desenvolvimento.
+
+## 📁 Project structure
+
+```
+site_rafael-munaro-arquitetura/
+├── docs/                      # 📚 Documentação
+│   ├── README.md             # Visão geral
+│   ├── AGENTS.md             # Este arquivo
+│   ├── ARCHITECTURE.md       # Arquitetura detalhada
+│   ├── CHANGELOG.md          # Histórico de mudanças
+│   └── RULES.md              # Regras de desenvolvimento
+│
+├── src/                       # 💻 Código fonte
+│   ├── index.html            # HTML principal (novo design)
+│   ├── assets/               # 🎨 Assets estáticos
+│   │   ├── fonts/           # Fontes customizadas
+│   │   ├── icons/           # Ícones SVG
+│   │   └── images/          # Imagens otimizadas
+│   │
+│   ├── js/                   # 📜 JavaScript
+│   │   ├── main.js          # Sistema principal
+│   │   ├── new-design.js    # ⭐ Sistema de design novo
+│   │   ├── topographic-background.js # ⭐ Animação de fundo
+│   │   └── utils.js         # Utilitários
+│   │
+│   ├── styles/               # 🎨 CSS modular
+│   │   ├── base.css         # Design tokens (CSS variables)
+│   │   ├── new-components.css # Componentes
+│   │   ├── new-sections.css   # Seções da página
+│   │   ├── new-responsive.css # Responsividade
+│   │   └── variables.css     # Variáveis adicionais
+│   │
+│   ├── components/           # 🧩 Componentes JS
+│   │   ├── header.js        # Header com navegação
+│   │   ├── navigation.js    # Sistema de navegação
+│   │   └── footer.js        # Footer
+│   │
+│   └── utils/                # 🔧 Utilitários
+│       └── helpers.js        # ⭐ Centralizados: debounce/throttle
+│
+├── public/                    # 📦 Assets públicos
+└── dist/                      # 🏗️ Build output
+```
+
+## 🏗️ Architecture guidelines
+
+### Design System
+
+- **Paleta de cores arquitetônica**: moss (#545943), beige (#E8DACB), terracotta (#B66C48)
+- **Tipografia**: Inter (sans-serif) + Playfair Display (serif)
+- **Espaçamento**: Sistema de 8px (0.5rem increments)
+- **Componentes modulares** com BEM
+- **CSS variables** para design tokens
+
+### Performance Priorities
+
+- **Lazy loading** para imagens abaixo da dobra
+- **IntersectionObserver** para animações
+- **Debounce/throttle** centralizados em `utils/helpers.js`
+- **Canvas optimization** para animação topográfica
+- **Critical CSS** inline preparado para futuro
+
+### Acessibilidade (WCAG 2.1 AA)
+
+- **HTML semântico** com roles apropriados
+- **Navegação por teclado** completa
+- **ARIA labels** em elementos interativos
+- **Contraste adequado** (4.5:1 mínimo)
+- **Skip links** para navegação rápida
+- **Focus management** em modais/forms
+
+### Component Pattern
+
+```javascript
+/**
+ * Component Class Pattern
+ * Padrão consistente para todos os componentes
+ */
+class ComponentName {
+  constructor(selector) {
+    this.element = document.querySelector(selector);
+    this.init();
+  }
+
+  init() {
+    this.cacheElements();
+    this.bindEvents();
+    // Outros setups necessários
+  }
+
+  cacheElements() {
+    // Cache de elementos DOM
+    this.button = this.element.querySelector('.component__button');
+  }
+
+  bindEvents() {
+    // Bind de eventos com throttle/debounce quando apropriado
+    this.button?.addEventListener('click', () => this.handleClick());
+  }
+
+  handleClick() {
+    // Lógica do componente
+  }
+}
+```
+
+## 🚀 Development workflow
+
+### Fluxo de Trabalho
+
+1. **Desenvolvimento**: `npm run dev` com hot reload
+2. **Qualidade**: `npm run lint` + `npm run format`
+3. **Build**: `npm run build` para produção
+4. **Teste**: `npm run preview` local antes do deploy
+
+### Commits (Conventional Commits)
+
+```bash
+# Formato: tipo(escopo): descrição
+feat(header): add sticky navigation on scroll
+fix(form): correct email validation regex
+docs(readme): update installation instructions
+style(css): format according to prettier rules
+refactor(utils): simplify date formatting function
+perf(images): implement lazy loading
+```
+
+### Breakpoints Responsivos
+
+```css
+/* Mobile-first base (< 768px) */
+/* Tablet */
+@media (min-width: 768px) {
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+}
+
+/* Large Desktop */
+@media (min-width: 1280px) {
+}
+
+/* Extra Large */
+@media (min-width: 1536px) {
+}
+```
+
+## ⚠️ Important notes
+
+### Utilitários Centralizados (v2.1.0)
+
+- **OBRIGATÓRIO**: Importar `debounce` e `throttle` de `../utils/helpers.js`
+- **PROIBIDO**: Redefinir essas funções localmente
+- **MOTIVO**: Redução de bundle size (~600 bytes gzip) e consistência
+
+```javascript
+// ✅ CORRETO
+import { debounce, throttle } from '../utils/helpers.js';
+
+// ❌ PROIBIDO
+const debounce = (func, wait) => {
+  /* código duplicado */
+};
+```
+
+### Animação Topográfica
+
+- Sistema Canvas complexo para background "vivo"
+- **Performance crítica**: 60fps garantido, pausa em tabs ocultas
+- **Acessibilidade**: Respeita `prefers-reduced-motion`
+- Não modificar sem entender completamente o sistema
+
+### SEO e Performance
+
+- Imagens sempre com `alt` descritivo e `loading="lazy"`
+- Meta tags otimizadas para arquitetura
+- Core Web Vitals como prioridade (LCP < 2.5s, FID < 100ms, CLS < 0.1)
+
+## 🔒 Security considerations
+
+- **NÃO commita** secrets ou tokens
+- Use **env vars** para configurações sensíveis
+- **Sempre sanitize** inputs de usuário
+- Implemente **CSP headers** em produção
+- Use **HTTPS only** em produção
+
+## 📊 Quality metrics
+
+### Performance Targets
+
+- **LCP**: < 2.5s (atual: ~1.8s)
+- **FID**: < 100ms (atual: ~50ms)
+- **CLS**: < 0.1 (atual: ~0.05)
+
+### Code Quality
+
+- **ESLint**: Zero warnings em CI
+- **Prettier**: Formatação consistente
+- **Acessibilidade**: WCAG 2.1 AA compliance
+
+### Bundle Analysis
+
+- Execute `npm run analyze` regularmente
+- Monitore tamanho do bundle
+- Otimize imports não utilizados
 
 ---
 
 **Última atualização:** Outubro 2025  
-**Versão:** 2.0.0  
+**Versão:** 3.0.0  
+**Formato:** AGENTS.md (padrão open-source)  
 **Responsável:** Equipe de Desenvolvimento

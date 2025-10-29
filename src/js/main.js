@@ -4,6 +4,11 @@
  */
 
 // ===========================================
+// IMPORTS
+// ===========================================
+import { debounce, scrollToElement, throttle } from '../utils/helpers.js';
+
+// ===========================================
 // CONFIGURAÇÃO E CONSTANTES
 // ===========================================
 
@@ -17,103 +22,36 @@ const CONFIG = {
     loading: '#loading',
     contactForm: '.contact__form',
     portfolioFilters: '.portfolio__filter',
-    portfolioItems: '.portfolio-item'
+    portfolioItems: '.portfolio-item',
   },
 
   // Breakpoints
   breakpoints: {
     mobile: 768,
     tablet: 1024,
-    desktop: 1280
+    desktop: 1280,
   },
 
   // Animation durations
   animations: {
     fast: 150,
     normal: 250,
-    slow: 350
+    slow: 350,
   },
 
   // API endpoints (futuro)
   api: {
     contact: '/api/contact',
-    portfolio: '/api/portfolio'
-  }
+    portfolio: '/api/portfolio',
+  },
 };
 
 // ===========================================
 // UTILITÁRIOS GLOBAIS
 // ===========================================
 
-/**
- * Debounce function para otimizar performance
- * @param {Function} func - Função a ser executada
- * @param {number} wait - Tempo de espera em ms
- * @returns {Function} Função debounced
- */
-const debounce = (func, wait) => {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
-/**
- * Throttle function para controlar frequência de execução
- * @param {Function} func - Função a ser executada
- * @param {number} limit - Limite de tempo em ms
- * @returns {Function} Função throttled
- */
-const throttle = (func, limit) => {
-  let inThrottle;
-  return function executedFunction(...args) {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
-};
-
-/**
- * Verifica se elemento está visível na viewport
- * @param {Element} element - Elemento a ser verificado
- * @param {number} threshold - Threshold de visibilidade (0-1)
- * @returns {boolean} Verdadeiro se visível
- */
-const isElementVisible = (element, threshold = 0.1) => {
-  if (!element) return false;
-
-  const rect = element.getBoundingClientRect();
-  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-  const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-  const elementHeight = rect.height;
-
-  return (visibleHeight / elementHeight) >= threshold;
-};
-
-/**
- * Anima scroll suave para elemento
- * @param {Element} element - Elemento alvo
- * @param {number} offset - Offset adicional em pixels
- */
-const scrollToElement = (element, offset = 0) => {
-  if (!element) return;
-
-  const elementPosition = element.offsetTop;
-  const offsetPosition = elementPosition - offset;
-
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'smooth'
-  });
-};
+// As funções utilitárias foram movidas para imports
+// isElementInViewport disponível via import
 
 // ===========================================
 // CLASSES DOS COMPONENTES
@@ -139,20 +77,26 @@ class HeaderManager {
 
     // Event listeners
     this.mobileToggle.addEventListener('click', () => this.toggleMenu());
-    
+
     if (this.menuOverlay) {
       this.menuOverlay.addEventListener('click', () => this.closeMenu());
     }
-    
-    document.addEventListener('click', (e) => this.handleOutsideClick(e));
-    window.addEventListener('scroll', throttle(() => this.handleScroll(), 10));
+
+    document.addEventListener('click', e => this.handleOutsideClick(e));
+    window.addEventListener(
+      'scroll',
+      throttle(() => this.handleScroll(), 10)
+    );
 
     // Close menu on resize
-    window.addEventListener('resize', debounce(() => {
-      if (window.innerWidth >= CONFIG.breakpoints.mobile) {
-        this.closeMenu();
-      }
-    }, 250));
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        if (window.innerWidth >= CONFIG.breakpoints.mobile) {
+          this.closeMenu();
+        }
+      }, 250)
+    );
 
     // Ativar links do menu
     this.initMenuLinks();
@@ -160,14 +104,14 @@ class HeaderManager {
 
   initMenuLinks() {
     const menuLinks = this.menu.querySelectorAll('.header__menu-link');
-    
+
     menuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', () => {
         // Remove active de todos
         menuLinks.forEach(l => l.classList.remove('header__menu-link--active'));
         // Adiciona active ao clicado
         link.classList.add('header__menu-link--active');
-        
+
         // Fecha menu mobile se aberto
         if (this.isMenuOpen) {
           setTimeout(() => this.closeMenu(), 300);
@@ -184,11 +128,11 @@ class HeaderManager {
     this.isMenuOpen = true;
     this.menu.setAttribute('aria-hidden', 'false');
     this.mobileToggle.setAttribute('aria-expanded', 'true');
-    
+
     if (this.menuOverlay) {
       this.menuOverlay.setAttribute('aria-hidden', 'false');
     }
-    
+
     document.body.style.overflow = 'hidden';
   }
 
@@ -196,18 +140,20 @@ class HeaderManager {
     this.isMenuOpen = false;
     this.menu.setAttribute('aria-hidden', 'true');
     this.mobileToggle.setAttribute('aria-expanded', 'false');
-    
+
     if (this.menuOverlay) {
       this.menuOverlay.setAttribute('aria-hidden', 'true');
     }
-    
+
     document.body.style.overflow = '';
   }
 
   handleOutsideClick(event) {
-    if (!this.menu.contains(event.target) &&
-        !this.mobileToggle.contains(event.target) &&
-        this.isMenuOpen) {
+    if (
+      !this.menu.contains(event.target) &&
+      !this.mobileToggle.contains(event.target) &&
+      this.isMenuOpen
+    ) {
       this.closeMenu();
     }
   }
@@ -240,7 +186,10 @@ class BackToTopManager {
   init() {
     if (!this.button) return;
 
-    window.addEventListener('scroll', throttle(() => this.handleScroll(), 100));
+    window.addEventListener(
+      'scroll',
+      throttle(() => this.handleScroll(), 100)
+    );
     this.button.addEventListener('click', () => this.scrollToTop());
   }
 
@@ -249,7 +198,7 @@ class BackToTopManager {
 
     if (shouldBeVisible !== this.isVisible) {
       this.isVisible = shouldBeVisible;
-      
+
       if (shouldBeVisible) {
         this.button.classList.add('show');
         this.button.hidden = false;
@@ -267,7 +216,6 @@ class BackToTopManager {
   scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
     });
   }
 }
@@ -287,7 +235,7 @@ class ScrollAnimationManager {
     if (!this.animatedElements.length) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             this.animateElement(entry.target);
@@ -297,7 +245,7 @@ class ScrollAnimationManager {
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -50px 0px',
       }
     );
 
@@ -326,12 +274,12 @@ class ContactFormManager {
   init() {
     if (!this.form) return;
 
-    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    this.form.addEventListener('submit', e => this.handleSubmit(e));
 
     // Máscara para telefone (opcional)
     const phoneInput = this.form.querySelector('input[name="phone"]');
     if (phoneInput) {
-      phoneInput.addEventListener('input', (e) => this.formatPhone(e.target));
+      phoneInput.addEventListener('input', e => this.formatPhone(e.target));
     }
   }
 
@@ -356,11 +304,9 @@ class ContactFormManager {
 
       this.showSuccessMessage();
       this.form.reset();
-
     } catch (error) {
       console.error('Erro ao enviar formulário:', error);
       this.showErrorMessage('Erro ao enviar mensagem. Tente novamente.');
-
     } finally {
       this.setSubmitting(false);
     }
@@ -425,7 +371,7 @@ class ContactFormManager {
 
   async submitForm(data) {
     // Simulação de delay da API
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         console.log('Formulário enviado:', data);
         resolve({ success: true });
@@ -450,9 +396,12 @@ class ContactFormManager {
       border-radius: var(--border-radius-lg);
       margin-bottom: var(--spacing-4);
       font-weight: var(--font-weight-medium);
-      ${type === 'success'
-        ? 'background-color: rgba(16, 185, 129, 0.1); color: var(--color-success); border: 1px solid var(--color-success);'
-        : 'background-color: rgba(239, 68, 68, 0.1); color: var(--color-error); border: 1px solid var(--color-error);'
+      ${
+        type === 'success'
+          ? 'background-color: rgba(16, 185, 129, 0.1); ' +
+            'color: var(--color-success); border: 1px solid var(--color-success);'
+          : 'background-color: rgba(239, 68, 68, 0.1); ' +
+            'color: var(--color-error); border: 1px solid var(--color-error);'
       }
     `;
 
@@ -522,7 +471,10 @@ class PortfolioManager {
     }
 
     // Resize
-    window.addEventListener('resize', debounce(() => this.handleResize(), 250));
+    window.addEventListener(
+      'resize',
+      debounce(() => this.handleResize(), 250)
+    );
 
     this.updateArrowStates();
   }
@@ -540,8 +492,7 @@ class PortfolioManager {
 
     // Update filter buttons
     this.filters.forEach(filter => {
-      filter.classList.toggle('portfolio__filter--active',
-        filter.dataset.filter === filterValue);
+      filter.classList.toggle('portfolio__filter--active', filter.dataset.filter === filterValue);
     });
 
     // Filter items
@@ -561,7 +512,7 @@ class PortfolioManager {
     });
 
     // Reset track position
-    this.track.style.transform = `translateX(0)`;
+    this.track.style.transform = 'translateX(0)';
 
     this.updateArrowStates();
   }
@@ -654,7 +605,7 @@ class App {
   initSmoothScrolling() {
     // Smooth scroll para links internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
+      anchor.addEventListener('click', e => {
         e.preventDefault();
         const target = document.querySelector(anchor.getAttribute('href'));
         if (target) {
@@ -719,12 +670,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // ERROR HANDLING GLOBAL
 // ===========================================
 
-window.addEventListener('error', (event) => {
+window.addEventListener('error', event => {
   console.error('❌ Erro global:', event.error);
   // Aqui você pode enviar para serviço de monitoramento como Sentry
 });
 
-window.addEventListener('unhandledrejection', (event) => {
+window.addEventListener('unhandledrejection', event => {
   console.error('❌ Promise rejeitada:', event.reason);
   // Aqui você pode enviar para serviço de monitoramento
 });

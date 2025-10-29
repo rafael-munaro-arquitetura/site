@@ -1,7 +1,16 @@
 /**
  * NEW-DESIGN.JS - Microinterações e Comportamentos
  * Baseado em princípios de UX e performance
+ * 
+ * ⚠️ AVISO: Este arquivo é LEGACY e não está sendo usado no projeto.
+ * O sistema ativo usa main.js
+ * Mantido apenas para referência histórica.
  */
+
+// ============================================================================
+// Imports
+// ============================================================================
+import { throttle } from '../utils/helpers.js';
 
 // ============================================================================
 // Utilities
@@ -9,29 +18,6 @@
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
-
-const debounce = (func, wait) => {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
-const throttle = (func, limit) => {
-  let inThrottle;
-  return function(...args) {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
-};
 
 // ============================================================================
 // Navigation
@@ -90,7 +76,7 @@ class SmoothScroll {
           
           window.scrollTo({
             top: targetPosition,
-            behavior: 'smooth'
+            
           });
         }
       });

@@ -433,7 +433,7 @@ export const http = {
    * @param {Object} options - Opções da requisição
    * @returns {Promise} Promise com resposta
    */
-  get: async (url, options = {}) => {
+  get: async(url, options = {}) => {
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -451,7 +451,7 @@ export const http = {
    * @param {Object} options - Opções da requisição
    * @returns {Promise} Promise com resposta
    */
-  post: async (url, data, options = {}) => {
+  post: async(url, data, options = {}) => {
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -470,7 +470,7 @@ export const http = {
    * @param {Object} options - Opções da requisição
    * @returns {Promise} Promise com resposta
    */
-  upload: async (url, formData, options = {}) => {
+  upload: async(url, formData, options = {}) => {
     return fetch(url, {
       method: 'POST',
       body: formData,
@@ -572,38 +572,6 @@ export const time = {
     return 'agora mesmo';
   },
 
-  /**
-   * Debounce para funções
-   * @param {Function} func - Função a ser debounced
-   * @param {number} wait - Tempo de espera
-   * @returns {Function} Função debounced
-   */
-  debounce: (func, wait) => {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  },
-
-  /**
-   * Throttle para funções
-   * @param {Function} func - Função a ser throttled
-   * @param {number} limit - Limite de tempo
-   * @returns {Function} Função throttled
-   */
-  throttle: (func, limit) => {
-    let inThrottle;
-    return function executedFunction(...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
-  }
+  // NOTA: debounce e throttle foram movidos para src/utils/helpers.js
+  // Importe de lá: import { debounce, throttle } from '../utils/helpers.js';
 };

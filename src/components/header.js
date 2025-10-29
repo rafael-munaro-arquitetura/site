@@ -231,7 +231,7 @@ export class HeaderComponent {
 
     window.scrollTo({
       top: targetPosition,
-      behavior: 'smooth'
+      
     });
   }
 

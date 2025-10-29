@@ -122,7 +122,7 @@ export class NavigationComponent {
 
     window.scrollTo({
       top: targetPosition,
-      behavior: 'smooth'
+      
     });
 
     // Update URL hash without triggering scroll
