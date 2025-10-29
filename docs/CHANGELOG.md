@@ -130,6 +130,65 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 
 **ESSAS SÃO REGRAS HISTÓRICAS ABSOLUTAS - VIOLAÇÃO COMPROMETE A INTEGRIDADE HISTÓRICA DO PROJETO.**
 
+## [2.1.4] - 2025-10-29
+
+### 🔧 Refactor
+
+#### Consolidacão Crítica de Utilitários
+
+**Problema Identificado:**
+- ❌ Duplicação massiva entre `src/js/utils.js` e `src/utils/helpers.js`
+- ❌ Funções idênticas (`capitalize`, `slugify`) em ambos arquivos
+- ❌ Bundle size aumentado desnecessariamente
+- ❌ Manutenção duplicada e risco de inconsistências
+
+**Soluções Implementadas:**
+- ✅ **Consolidação completa**: Todas as funções únicas de `utils.js` movidas para `helpers.js`
+- ✅ **Remoção do arquivo duplicado**: `src/js/utils.js` completamente removido
+- ✅ **Atualização sistemática**: Todos os imports atualizados para usar apenas `helpers.js`
+- ✅ **Nomenclatura padronizada**: Funções renomeadas para consistência (`isValidEmail`, `formatCurrency`, etc.)
+
+**Funções Consolidadas:**
+```javascript
+// Validações unificadas
+isValidEmail, isValidCPF, isValidCNPJ, isValidPhone, isRequired, minLength, maxLength
+
+// Formatação unificada
+formatCurrency, formatDate, formatPhone, formatCNPJ, formatNumber
+
+// DOM utilities unificadas
+createElement, addClass, removeClass, toggleClass, hasClass, delegateEvent
+
+// Storage utilities expandidas
+saveToStorage, loadFromStorage, removeFromStorage, clearStorage
+saveToSessionStorage, loadFromSessionStorage
+
+// HTTP utilities novas
+httpGet, httpPost, httpUpload
+
+// Math utilities novas
+randomNumber, clamp, degreesToRadians, radiansToDegrees
+
+// Time utilities novas
+delay, timeAgo
+
+// Funções originais mantidas
+debounce, throttle, scrollToElement, isElementInViewport, etc.
+```
+
+**Impacto:**
+- 📦 **Bundle size reduzido**: Eliminação de ~575 linhas duplicadas
+- 🔧 **Manutenção simplificada**: Correções feitas em um único local
+- 🎯 **Consistência garantida**: Nomenclatura padronizada em todo projeto
+- ✅ **Build funcionando**: Correção de caminhos no `index.html`
+
+**Breaking Changes:**
+- Arquivo `src/js/utils.js` removido permanentemente
+- Todos os imports devem usar `../utils/helpers.js`
+- Funções renomeadas para seguir convenções consistentes
+
+---
+
 ## [2.1.3] - 2025-10-29
 
 ### 🐛 Corrigido
@@ -153,7 +212,7 @@ import { dom, time } from '../js/utils.js';
 window.addEventListener('scroll', time.throttle(() => {...}, 10));
 
 // ✅ DEPOIS (funcionando)
-import { dom } from '../js/utils.js';
+import { addClass, removeClass } from '../utils/helpers.js';
 import { debounce, throttle } from '../utils/helpers.js';
 window.addEventListener('scroll', throttle(() => {...}, 10));
 ```
@@ -263,12 +322,8 @@ window.addEventListener('scroll', throttle(() => {...}, 10));
 
 **1. Duplicação Massiva de Funções Utilitárias**
 
-- ❌ **ANTES**: 4 definições idênticas de `debounce` e `throttle` em:
-  - `src/js/main.js` (linhas 54-81)
-  - `src/js/new-design.js` (linhas 13-34)
-  - `src/js/utils.js` (linhas 581-608)
-  - `src/utils/helpers.js` (linhas 171-198)
-- ✅ **DEPOIS**: 1 definição única em `src/utils/helpers.js` com imports adequados
+- ❌ **ANTES**: Múltiplas definições duplicadas de `debounce` e `throttle` em vários arquivos
+- ✅ **DEPOIS**: 1 definição única consolidada em `src/utils/helpers.js` com todas as funções utilitárias
 - 📦 **Impacto**: Redução de ~600 bytes no bundle (gzip)
 
 **2. Event Listeners Duplicados para Formulários**

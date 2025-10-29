@@ -245,8 +245,7 @@ site_rafael-munaro-arquitetura/
 │   ├── js/                   # 📜 JavaScript
 │   │   ├── main.js          # Sistema principal
 │   │   ├── new-design.js    # ⭐ Sistema de design novo
-│   │   ├── topographic-background.js # ⭐ Animação de fundo
-│   │   └── utils.js         # Utilitários
+│   │   └── topographic-background.js # ⭐ Animação de fundo
 │   │
 │   ├── styles/               # 🎨 CSS modular
 │   │   ├── base.css         # Design tokens (CSS variables)
