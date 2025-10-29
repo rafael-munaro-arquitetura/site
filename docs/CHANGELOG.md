@@ -14,15 +14,18 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 ### 📋 Protocolo Obrigatório:
 
 #### 1. **Antes de Qualquer Mudança:**
+
 - Verificar versão atual no `package.json`
 - Planejar se mudança requer nova versão (MAJOR.MINOR.PATCH)
 
 #### 2. **Durante a Implementação:**
+
 - Documentar todas as mudanças em tempo real
 - Categorizar corretamente (feat, fix, refactor, etc.)
 - Incluir breaking changes quando aplicável
 
 #### 3. **Após Implementação:**
+
 - Criar nova entrada no changelog ANTES do commit
 - Atualizar versão no `package.json` se necessário
 - Incluir métricas de melhoria quando mensuráveis
@@ -35,6 +38,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 ### ✨ Implementado
 
 #### 🎯 Título da Funcionalidade
+
 - Descrição técnica detalhada
 - Impacto na performance/código
 - Breaking changes (se aplicável)
@@ -42,26 +46,116 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 ### 🔧 Refatoração
 
 #### ⚠️ Breaking Changes
+
 - Mudanças incompatíveis documentadas
 - Migração necessária explicada
 
 ### 🐛 Corrigido
+
 - Bugs corrigidos com contexto
 - Root cause identificado
 
 ### 📊 Métricas de Melhoria
-| Métrica | Antes | Depois | Melhoria |
-|---------|-------|--------|----------|
-| Bundle Size | X KB | Y KB | -Z% |
+
+| Métrica     | Antes | Depois | Melhoria |
+| ----------- | ----- | ------ | -------- |
+| Bundle Size | X KB  | Y KB   | -Z%      |
 ```
 
 ### 🚫 PROIBIDO:
+
 - Fazer commits sem atualizar changelog
 - Implementar features sem documentar
 - Corrigir bugs sem registrar correção
 - Alterar versão sem justificativa documentada
 
 **VIOLAÇÃO RESULTARÁ EM CÓDIGO INCOMPLETO E HISTÓRICO PERDIDO.**
+
+## 🚨 REGRAS ABSOLUTAS ADICIONAIS - ORGANIZAÇÃO HISTÓRICA
+
+### 1. 📋 ORGANIZAÇÃO HISTÓRICA - EXCELÊNCIA OBRIGATÓRIA
+
+**TODO trabalho com código deve preservar organização histórica impecável**
+
+#### 📋 Requisitos Históricos Obrigatórios:
+
+- **Organização histórica**: Código sempre estruturado com clareza histórica
+- **Padronização histórica**: Seguir padrões estabelecidos preservando histórico organizacional
+- **Localização histórica**: Arquivos criados nos locais historicamente ideais
+- **Consistência histórica**: Manter organização lógica através da história do projeto
+- **Documentação histórica**: Registrar decisões organizacionais que impactem o histórico
+
+#### 🚫 VIOLAÇÕES HISTÓRICAS PROIBIDAS:
+
+- ❌ Quebrar organização histórica estabelecida
+- ❌ Desorganizar estrutura histórica existente
+- ❌ Ignorar padrões organizacionais históricos
+- ❌ Comprometer integridade histórica do código
+
+### 2. 📚 GOVERNANÇA DOCUMENTAL HISTÓRICA
+
+**PROIBIÇÃO TOTAL de criação de documentação histórica paralela**
+
+#### 📋 Protocolo Histórico Estrito:
+
+- **Atualização histórica**: Trabalhar exclusivamente com documentação existente em `docs/`
+- **Criação histórica vetada**: Nenhuma nova documentação histórica pode ser criada
+- **Documentos históricos sagrados**: `README.md` (raiz) e `INFO.md` são historicamente imutáveis
+- **Modificações históricas controladas**: Apenas conteúdo dos arquivos históricos existentes
+
+#### 🚫 PROIBIDO HISTORICAMENTE:
+
+- ❌ Criar `HISTORICO.md`, `CHANGELOG_ALTERNATIVO.md` ou documentação histórica nova
+- ❌ Alterar `README.md` na raiz histórica do projeto
+- ❌ Modificar `INFO.md` historicamente
+- ❌ Estabelecer documentação histórica paralela fora de `docs/`
+
+### 3. 🌐 ESTRUTURA HTML HISTÓRICA DEFINITIVA
+
+**O arquivo `index.html` deve preservar sua posição histórica na raiz**
+
+#### 📋 Localização Histórica Fixa:
+
+- **Posição histórica**: Sempre na raiz (`/index.html`) - localização histórica definitiva
+- **Imutabilidade histórica**: Posição nunca deve ser alterada historicamente
+- **Consistência histórica**: Manter padrão de acesso histórico consistente
+
+#### 🚫 PROIBIDO HISTORICAMENTE:
+
+- ❌ Mover historicamente para `src/index.html` ou subdiretórios
+- ❌ Criar versões históricas paralelas do index.html
+- ❌ Alterar referências históricas ou caminhos
+
+---
+
+**ESSAS SÃO REGRAS HISTÓRICAS ABSOLUTAS - VIOLAÇÃO COMPROMETE A INTEGRIDADE HISTÓRICA DO PROJETO.**
+
+## [2.1.2] - 2025-10-29
+
+### 📋 Regras Absolutas Adicionais - Organização e Estrutura
+
+#### Implementado
+
+##### 🚨 Sistema de Regras Absolutas Expandido
+- **Regra 1 implementada**: Priorização obrigatória de melhores práticas organizacionais em TODO código
+- **Regra 2 implementada**: Proibição absoluta de criação de novos arquivos informativos
+- **Regra 3 implementada**: Localização definitiva e imutável do `index.html` na raiz
+- **Cobertura universal**: Regras aplicadas em todos os 6 arquivos de documentação
+- **Reforço organizacional**: Ênfase em estrutura clara, padronização e localização ideal
+
+##### 📋 Regras por Documento:
+- **INFO.md**: Regras gerais de organização organizacional
+- **AGENTS.md**: Prioridade absoluta em organização para agentes
+- **ARCHITECTURE.md**: Excelência organizacional arquitetural
+- **CHANGELOG.md**: Organização histórica impecável
+- **RULES.md**: Organização regulamentar suprema
+- **README.md**: Organização profissional executiva
+
+##### 🛡️ Mecanismos de Proteção:
+- **Proibição de criação**: Nenhum novo arquivo informativo pode ser criado
+- **Imutabilidade sagrada**: `README.md` (raiz) e `INFO.md` nunca alterados
+- **Localização fixa**: `index.html` sempre na pasta pai (raiz)
+- **Consistência estrutural**: Manutenção de padrões organizacionais superiores
 
 ## [2.1.1] - 2025-10-29
 
@@ -70,6 +164,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 #### Implementado
 
 ##### 🚨 Sistema de Regras Obrigatórias
+
 - **Regra absoluta implementada**: Toda LLM deve atualizar documentação após qualquer alteração
 - **Cobertura completa**: 6 arquivos de documentação atualizados (INFO.md, AGENTS.md, ARCHITECTURE.md, CHANGELOG.md, RULES.md, README.md)
 - **Protocolos específicos**: Cada documento tem regras específicas de quando e como atualizar
@@ -77,6 +172,7 @@ Toda vez que uma LLM realizar **QUALQUER** alteração, correção ou adição n
 - **Prevenção de inconsistências**: Sistema garante alinhamento entre código e documentação
 
 ##### 📋 Protocolos por Documento:
+
 - **INFO.md**: Protocolo geral de atualização obrigatória
 - **AGENTS.md**: Regras para setup e configuração de agentes
 - **ARCHITECTURE.md**: ADRs obrigatórios para mudanças arquiteturais

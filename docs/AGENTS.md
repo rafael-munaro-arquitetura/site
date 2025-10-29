@@ -25,12 +25,72 @@ Sempre que você (ou qualquer LLM) realizar **QUALQUER** alteração no código,
 5. **Novas dependências** → Atualizar informações sobre ferramentas
 
 ### ⚠️ Consequências da Não Conformidade:
+
 - Código não será considerado "completo" sem documentação atualizada
 - Qualidade do projeto será comprometida
 - Setup de novos desenvolvedores será prejudicado
 - Manutenibilidade futura será dificultada
 
 **Esta é uma REGRA EXCLUSIVA e deve ser seguida SEM EXCEÇÕES.**
+
+## 🚨 REGRAS ABSOLUTAS ADICIONAIS - ORGANIZAÇÃO OBRIGATÓRIA
+
+### 1. 🏗️ PRIORIDADE ABSOLUTA: MELHORES PRÁTICAS ORGANIZACIONAIS
+
+**QUALQUER trabalho com código deve ser orientado por excelência organizacional**
+
+#### 📋 Requisitos Obrigatórios:
+
+- **Organização impecável**: Código sempre estruturado de forma clara e lógica
+- **Padronização forçada**: Seguir rigorosamente padrões estabelecidos para arquivos
+- **Localização otimizada**: Arquivos SEMPRE criados no melhor local estratégico possível
+- **Arquitetura consistente**: Manter organização lógica e preparada para escalabilidade
+- **Decisões documentadas**: Explicar escolhas organizacionais quando impactarem estrutura
+
+#### 🚫 VIOLAÇÕES CRÍTICAS PROIBIDAS:
+
+- ❌ Criar arquivos em locais inadequados ou incorretos
+- ❌ Permitir desorganização da estrutura existente
+- ❌ Ignorar padrões organizacionais estabelecidos
+- ❌ Manter ou criar código com estrutura deficiente
+
+### 2. 📚 GESTÃO DOCUMENTAL RIGOROSA
+
+**PROIBIÇÃO TOTAL de criação de novos arquivos informativos**
+
+#### 📋 Protocolo Estrito:
+
+- **Apenas atualização**: Trabalhar EXCLUSIVAMENTE com arquivos já existentes em `docs/`
+- **Criação vetada**: Nenhuma nova documentação pode ser criada
+- **Arquivos sagrados**: `README.md` (raiz) e `INFO.md` são INTANGÍVEIS - nunca alterados
+- **Modificações controladas**: Apenas conteúdo dos arquivos existentes em `docs/`
+
+#### 🚫 PROIBIDO SOB PENA DE INVALIDAÇÃO:
+
+- ❌ Criar `TUTORIAL.md`, `MANUAL.md`, `GUIA.md` ou qualquer arquivo informativo
+- ❌ Modificar `README.md` na pasta raiz do projeto
+- ❌ Alterar `INFO.md` de qualquer forma ou conteúdo
+- ❌ Estabelecer documentação paralela fora do diretório `docs/`
+
+### 3. 🌐 ESTRUTURA HTML DEFINITIVA
+
+**O arquivo `index.html` deve permanecer IMUTÁVEL na pasta pai (raiz)**
+
+#### 📋 Localização Fixa e Obrigatória:
+
+- **Raiz do projeto**: Sempre em `/index.html` - localização definitiva
+- **Imobilidade**: Local nunca deve ser alterado ou movido
+- **Consistência estrutural**: Manter padrão de acesso uniforme
+
+#### 🚫 PROIBIDO - SANÇÕES IMEDIATAS:
+
+- ❌ Mover para `src/index.html` ou qualquer subdiretório
+- ❌ Criar versões duplicadas ou paralelas
+- ❌ Alterar referências ou caminhos de acesso
+
+---
+
+**ESSAS SÃO REGRAS ABSOLUTAS PARA AGENTES DE IA - CUMPRIMENTO OBRIGATÓRIO E INQUESTIONÁVEL.**
 
 ## 🛠️ Setup commands
 

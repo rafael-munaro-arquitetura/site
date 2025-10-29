@@ -33,28 +33,93 @@ Toda vez que uma LLM realizar **QUALQUER** alteração arquitetural, técnica ou
 **Status:** ✅ Accepted | **Data:** YYYY-MM-DD | **Responsável:** LLM/Equipe
 
 #### Contexto
+
 [Descrição do problema/contexto]
 
 #### Opções Consideradas
+
 **Opção 1: [Nome]**
+
 - ✅ Prós...
 - ❌ Contras...
 
 #### Decisão
+
 [Escolha final com justificativa]
 
 #### Consequências
+
 - **Positivo**: [Benefícios]
 - **Negativo**: [Trade-offs]
 - **Mitigação**: [Soluções implementadas]
 ```
 
 ### 🚫 PROIBIDO:
+
 - Fazer mudanças no código sem documentar em ADR
 - Modificar arquitetura sem justificativa documentada
 - Alterar decisões técnicas sem registro histórico
 
 **VIOLAÇÃO DESTA REGRA COMPROMETE A QUALIDADE E MANUTENIBILIDADE DO PROJETO.**
+
+## 🚨 REGRAS ABSOLUTAS ADICIONAIS - ORGANIZAÇÃO ARQUITETURAL
+
+### 1. 🏗️ EXCELÊNCIA ORGANIZACIONAL - PRIORIDADE MÁXIMA
+
+**TODAS as alterações devem ser guiadas por padrões organizacionais superiores**
+
+#### 📋 Princípios Arquiteturais Obrigatórios:
+
+- **Organização arquitetural**: Código estruturado com clareza arquitetural impecável
+- **Padronização arquitetural**: Seguir padrões estabelecidos para organização de arquivos
+- **Localização arquitetural**: Arquivos sempre posicionados no local arquiteturalmente ideal
+- **Consistência estrutural**: Manter arquitetura lógica e escalável
+- **Documentação arquitetural**: Justificar decisões organizacionais em ADRs quando relevante
+
+#### 🚫 VIOLAÇÕES ARQUITETURAIS PROIBIDAS:
+
+- ❌ Arquivos criados em locais arquiteturalmente inadequados
+- ❌ Desorganização da estrutura arquitetural existente
+- ❌ Violação de padrões organizacionais estabelecidos
+- ❌ Manutenção de código com arquitetura deficiente
+
+### 2. 📚 GOVERNANÇA DOCUMENTAL ARQUITETURAL
+
+**PROIBIÇÃO ABSOLUTA de criação de nova documentação arquitetural**
+
+#### 📋 Governança Estrita:
+
+- **Atualização exclusiva**: Trabalhar apenas com documentação arquitetural existente em `docs/`
+- **Criação arquitetural vetada**: Nenhuma nova documentação arquitetural pode ser criada
+- **Documentos arquiteturais sagrados**: `README.md` (raiz) e `INFO.md` são arquiteturalmente imutáveis
+- **Modificações arquiteturais controladas**: Apenas conteúdo dos arquivos arquiteturais existentes
+
+#### 🚫 PROIBIDO ARQUITETURALMENTE:
+
+- ❌ Criar `ARQUITETURA.md`, `DESIGN.md` ou qualquer documentação arquitetural nova
+- ❌ Alterar `README.md` na raiz arquitetural do projeto
+- ❌ Modificar `INFO.md` arquiteturalmente
+- ❌ Estabelecer documentação arquitetural paralela fora de `docs/`
+
+### 3. 🌐 ARQUITETURA HTML DEFINITIVA
+
+**O arquivo `index.html` deve manter sua posição arquitetural na raiz do projeto**
+
+#### 📋 Arquitetura Fixa:
+
+- **Posição arquitetural**: Sempre na raiz (`/index.html`) - arquitetura definitiva
+- **Imutabilidade arquitetural**: Posição arquitetural nunca deve ser alterada
+- **Consistência arquitetural**: Manter padrão arquitetural de acesso consistente
+
+#### 🚫 PROIBIDO ARQUITETURALMENTE:
+
+- ❌ Mover arquiteturalmente para `src/index.html` ou subdiretórios
+- ❌ Criar arquiteturas paralelas do index.html
+- ❌ Alterar referências arquiteturais ou caminhos
+
+---
+
+**ESSAS SÃO REGRAS ARQUITETURAIS ABSOLUTAS - VIOLAÇÃO COMPROMETE A INTEGRIDADE ARQUITETURAL DO SISTEMA.**
 
 ### 🎯 Propósito dos ADRs
 

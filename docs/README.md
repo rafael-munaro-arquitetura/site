@@ -55,6 +55,59 @@ Toda vez que uma LLM realizar **QUALQUER** alteração que afete a visão geral,
 
 **VIOLAÇÃO COMPROMETE A APRESENTAÇÃO PROFISSIONAL DO PROJETO.**
 
+## 🚨 REGRAS ABSOLUTAS ADICIONAIS - ORGANIZAÇÃO PROFISSIONAL
+
+### 1. 🏢 ORGANIZAÇÃO PROFISSIONAL - EXCELÊNCIA EXECUTIVA
+
+**TODO trabalho no código deve refletir organização profissional superior**
+
+#### 📋 Padrões Profissionais Obrigatórios:
+- **Organização profissional**: Código estruturado com clareza profissional impecável
+- **Padronização profissional**: Seguir padrões estabelecidos profissionalmente
+- **Localização profissional**: Arquivos sempre criados nos locais profissionalmente ideais
+- **Consistência profissional**: Manter organização lógica profissional
+- **Documentação profissional**: Registrar decisões organizacionais profissionalmente relevantes
+
+#### 🚫 VIOLAÇÕES PROFISSIONAIS PROIBIDAS:
+- ❌ Criar arquivos em locais profissionalmente inadequados
+- ❌ Desorganizar estrutura profissional existente
+- ❌ Ignorar padrões organizacionais profissionais
+- ❌ Manter código com estrutura profissional deficiente
+
+### 2. 📚 GESTÃO DOCUMENTAL PROFISSIONAL
+
+**PROIBIÇÃO PROFISSIONAL total de criação de documentação adicional**
+
+#### 📋 Governança Profissional:
+- **Atualização profissional**: Trabalhar exclusivamente com documentação profissional em `docs/`
+- **Criação profissional vetada**: Nenhuma nova documentação profissional pode ser criada
+- **Documentos profissionais sagrados**: `README.md` (raiz) e `INFO.md` são profissionalmente imutáveis
+- **Modificações profissionais**: Apenas conteúdo dos arquivos profissionais existentes
+
+#### 🚫 PROIBIDO PROFISSIONALMENTE:
+- ❌ Criar `PROFISSIONAL.md`, `GUIA.md`, `MANUAL.md` ou documentação profissional nova
+- ❌ Alterar `README.md` na raiz profissional do projeto
+- ❌ Modificar `INFO.md` profissionalmente
+- ❌ Estabelecer documentação profissional paralela fora de `docs/`
+
+### 3. 🌐 APRESENTAÇÃO HTML PROFISSIONAL DEFINITIVA
+
+**O arquivo `index.html` deve manter apresentação profissional na raiz**
+
+#### 📋 Localização Profissional Fixa:
+- **Posição profissional**: Sempre na raiz (`/index.html`) - apresentação profissional definitiva
+- **Imutabilidade profissional**: Posição nunca deve ser alterada profissionalmente
+- **Consistência profissional**: Manter padrão profissional de acesso consistente
+
+#### 🚫 PROIBIDO PROFISSIONALMENTE:
+- ❌ Mover profissionalmente para `src/index.html` ou subdiretórios
+- ❌ Criar versões profissionais paralelas do index.html
+- ❌ Alterar referências profissionais ou caminhos
+
+---
+
+**ESSAS SÃO REGRAS PROFISSIONAIS ABSOLUTAS - VIOLAÇÃO COMPROMETE A APRESENTAÇÃO PROFISSIONAL EXECUTIVA.**
+
 ### 🎯 Objetivos
 
 - **Apresentar portfólio profissional** com projetos realizados

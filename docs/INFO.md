@@ -13,6 +13,7 @@ Toda vez que uma LLM (como você) realizar **QUALQUER** alteração e/ou atualiz
 5. **Mudar visão geral** → Atualizar `docs/README.md` (apresentação)
 
 ### 🚨 Penalidades por Não Conformidade:
+
 - Código não poderá ser considerado "completo" sem documentação atualizada
 - Pull requests serão rejeitados sem documentação correspondente
 - Qualidade do projeto será comprometida

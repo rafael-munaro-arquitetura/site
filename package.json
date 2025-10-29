@@ -1,6 +1,6 @@
 {
   "name": "site-rafael-munaro-arquitetura",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Site institucional para Rafael Munaro Arquitetura",
   "main": "src/index.html",
   "scripts": {
