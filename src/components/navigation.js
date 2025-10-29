@@ -3,8 +3,7 @@
  * Gerencia navegação, breadcrumbs e indicações visuais
  */
 
-import { dom } from '../js/utils.js';
-import { debounce, throttle } from '../utils/helpers.js';
+import { debounce, throttle, addClass, removeClass } from '../utils/helpers.js';
 
 export class NavigationComponent {
   constructor(options = {}) {
@@ -169,7 +168,7 @@ export class NavigationComponent {
   updateActiveLink(sectionId) {
     // Remove active class from all links
     this.menuLinks.forEach(link => {
-      dom.removeClass(link, 'header__menu-link--active');
+      removeClass(link, 'header__menu-link--active');
       link.removeAttribute('aria-current');
     });
 
@@ -180,7 +179,7 @@ export class NavigationComponent {
     });
 
     if (activeLink) {
-      dom.addClass(activeLink, 'header__menu-link--active');
+      addClass(activeLink, 'header__menu-link--active');
       activeLink.setAttribute('aria-current', 'page');
     }
   }

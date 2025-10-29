@@ -3,7 +3,7 @@
  * Gerencia o comportamento do header responsivo
  */
 
-import { dom } from '../js/utils.js';
+import { addClass, removeClass } from '../utils/helpers.js';
 import { debounce, throttle } from '../utils/helpers.js';
 
 export class HeaderComponent {
@@ -123,7 +123,7 @@ export class HeaderComponent {
     if (!this.menu || !this.mobileToggle) return;
 
     this.isMenuOpen = true;
-    dom.addClass(this.menu, 'header__menu--open');
+    addClass(this.menu, 'header__menu--open');
     this.mobileToggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
 
@@ -138,7 +138,7 @@ export class HeaderComponent {
     if (!this.menu || !this.mobileToggle) return;
 
     this.isMenuOpen = false;
-    dom.removeClass(this.menu, 'header__menu--open');
+    removeClass(this.menu, 'header__menu--open');
     this.mobileToggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
 
@@ -164,10 +164,10 @@ export class HeaderComponent {
       this.isSticky = shouldBeSticky;
 
       if (shouldBeSticky) {
-        dom.addClass(this.header, 'header--sticky');
+        addClass(this.header, 'header--sticky');
         this.dispatchEvent('header:stickyActivated');
       } else {
-        dom.removeClass(this.header, 'header--sticky');
+        removeClass(this.header, 'header--sticky');
         this.dispatchEvent('header:stickyDeactivated');
       }
     }
@@ -251,9 +251,9 @@ export class HeaderComponent {
         const targetBottom = targetTop + targetElement.offsetHeight;
 
         if (scrollPosition >= targetTop && scrollPosition < targetBottom) {
-          dom.addClass(link, 'header__menu-link--active');
+          addClass(link, 'header__menu-link--active');
         } else {
-          dom.removeClass(link, 'header__menu-link--active');
+          removeClass(link, 'header__menu-link--active');
         }
       }
     });

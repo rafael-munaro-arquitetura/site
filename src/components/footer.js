@@ -3,7 +3,6 @@
  * Manages the behavior and interactivity of the footer
  */
 
-import { dom } from '../js/utils.js';
 
 export class FooterComponent {
   constructor(options = {}) {

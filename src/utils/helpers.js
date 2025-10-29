@@ -392,3 +392,294 @@ export const removeFromStorage = (key) => {
     console.error('Erro ao remover do localStorage:', error);
   }
 };
+
+/**
+ * Limpa todo localStorage
+ */
+export const clearStorage = () => {
+  try {
+    localStorage.clear();
+  } catch (error) {
+    console.error('Erro ao limpar localStorage:', error);
+  }
+};
+
+/**
+ * Salva item no sessionStorage
+ * @param {string} key - Chave
+ * @param {*} value - Valor a ser salvo
+ */
+export const saveToSessionStorage = (key, value) => {
+  try {
+    const serialized = JSON.stringify(value);
+    sessionStorage.setItem(key, serialized);
+  } catch (error) {
+    console.error('Erro ao salvar no sessionStorage:', error);
+  }
+};
+
+/**
+ * Carrega item do sessionStorage
+ * @param {string} key - Chave
+ * @param {*} defaultValue - Valor padrão
+ * @returns {*} Valor recuperado ou valor padrão
+ */
+export const loadFromSessionStorage = (key, defaultValue = null) => {
+  try {
+    const item = sessionStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch (error) {
+    console.error('Erro ao recuperar do sessionStorage:', error);
+    return defaultValue;
+  }
+};
+
+/**
+ * Valida telefone brasileiro
+ * @param {string} phone - Telefone a ser validado
+ * @returns {boolean} Verdadeiro se válido
+ */
+export const isValidPhone = (phone) => {
+  const cleaned = phone.replace(/\D/g, '');
+  return cleaned.length >= 10 && cleaned.length <= 11;
+};
+
+/**
+ * Valida CNPJ
+ * @param {string} cnpj - CNPJ a ser validado
+ * @returns {boolean} Verdadeiro se válido
+ */
+export const isValidCNPJ = (cnpj) => {
+  const cleaned = cnpj.replace(/\D/g, '');
+
+  if (cleaned.length !== 14) return false;
+  if (/^(\d)\1+$/.test(cleaned)) return false; // CNPJ com todos dígitos iguais
+
+  const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  const weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+  let sum = 0;
+  for (let i = 0; i < 12; i++) {
+    sum += parseInt(cleaned[i]) * weights1[i];
+  }
+  let remainder = sum % 11;
+  if (remainder < 2) remainder = 0;
+  else remainder = 11 - remainder;
+  if (remainder !== parseInt(cleaned[12])) return false;
+
+  sum = 0;
+  for (let i = 0; i < 13; i++) {
+    sum += parseInt(cleaned[i]) * weights2[i];
+  }
+  remainder = sum % 11;
+  if (remainder < 2) remainder = 0;
+  else remainder = 11 - remainder;
+
+  return remainder === parseInt(cleaned[13]);
+};
+
+/**
+ * Valida se string não está vazia
+ * @param {string} value - Valor a ser validado
+ * @returns {boolean} Verdadeiro se não vazio
+ */
+export const isRequired = (value) => {
+  return value && value.trim().length > 0;
+};
+
+/**
+ * Valida comprimento mínimo
+ * @param {string} value - Valor a ser validado
+ * @param {number} minLength - Comprimento mínimo
+ * @returns {boolean} Verdadeiro se válido
+ */
+export const minLength = (value, minLength) => {
+  return value && value.length >= minLength;
+};
+
+/**
+ * Valida comprimento máximo
+ * @param {string} value - Valor a ser validado
+ * @param {number} maxLength - Comprimento máximo
+ * @returns {boolean} Verdadeiro se válido
+ */
+export const maxLength = (value, maxLength) => {
+  return value && value.length <= maxLength;
+};
+
+/**
+ * Formata CNPJ
+ * @param {string} cnpj - CNPJ a ser formatado
+ * @returns {string} CNPJ formatado
+ */
+export const formatCNPJ = (cnpj) => {
+  const cleaned = cnpj.replace(/\D/g, '');
+  return cleaned.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$2.$3.$4/$1-$5');
+};
+
+/**
+ * Formata número com separadores
+ * @param {number} num - Número a ser formatado
+ * @returns {string} Número formatado
+ */
+export const formatNumber = (num) => {
+  return new Intl.NumberFormat('pt-BR').format(num);
+};
+
+/**
+ * Verifica se elemento tem classe
+ * @param {Element|string} element - Elemento ou seletor
+ * @param {string} className - Classe a ser verificada
+ * @returns {boolean} Verdadeiro se tem a classe
+ */
+export const hasClass = (element, className) => {
+  const el = typeof element === 'string' ? document.querySelector(element) : element;
+  return el ? el.classList.contains(className) : false;
+};
+
+/**
+ * Adiciona event listener com delegate
+ * @param {Element|string} parent - Elemento pai ou seletor
+ * @param {string} selector - Seletor dos elementos filhos
+ * @param {string} event - Tipo do evento
+ * @param {Function} handler - Função handler
+ */
+export const delegateEvent = (parent, selector, event, handler) => {
+  const parentEl = typeof parent === 'string' ? document.querySelector(parent) : parent;
+
+  if (!parentEl) return;
+
+  parentEl.addEventListener(event, (e) => {
+    const target = e.target.closest(selector);
+    if (target) {
+      handler.call(target, e);
+    }
+  });
+};
+
+/**
+ * Faz requisição GET
+ * @param {string} url - URL da requisição
+ * @param {Object} options - Opções da requisição
+ * @returns {Promise} Promise com resposta
+ */
+export const httpGet = async(url, options = {}) => {
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    },
+    ...options
+  }).then(response => response.json());
+};
+
+/**
+ * Faz requisição POST
+ * @param {string} url - URL da requisição
+ * @param {Object} data - Dados a serem enviados
+ * @param {Object} options - Opções da requisição
+ * @returns {Promise} Promise com resposta
+ */
+export const httpPost = async(url, data, options = {}) => {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    },
+    body: JSON.stringify(data),
+    ...options
+  }).then(response => response.json());
+};
+
+/**
+ * Faz upload de arquivo
+ * @param {string} url - URL da requisição
+ * @param {FormData} formData - Dados do formulário
+ * @param {Object} options - Opções da requisição
+ * @returns {Promise} Promise com resposta
+ */
+export const httpUpload = async(url, formData, options = {}) => {
+  return fetch(url, {
+    method: 'POST',
+    body: formData,
+    ...options
+  }).then(response => response.json());
+};
+
+/**
+ * Gera número aleatório entre min e max
+ * @param {number} min - Valor mínimo
+ * @param {number} max - Valor máximo
+ * @returns {number} Número aleatório
+ */
+export const randomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+/**
+ * Clampa valor entre min e max
+ * @param {number} value - Valor a ser clamped
+ * @param {number} min - Valor mínimo
+ * @param {number} max - Valor máximo
+ * @returns {number} Valor clamped
+ */
+export const clamp = (value, min, max) => {
+  return Math.min(Math.max(value, min), max);
+};
+
+/**
+ * Converte graus para radianos
+ * @param {number} degrees - Graus
+ * @returns {number} Radianos
+ */
+export const degreesToRadians = (degrees) => {
+  return degrees * (Math.PI / 180);
+};
+
+/**
+ * Converte radianos para graus
+ * @param {number} radians - Radianos
+ * @returns {number} Graus
+ */
+export const radiansToDegrees = (radians) => {
+  return radians * (180 / Math.PI);
+};
+
+/**
+ * Delay com Promise
+ * @param {number} ms - Milissegundos
+ * @returns {Promise} Promise resolvida após delay
+ */
+export const delay = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+/**
+ * Formata tempo relativo (ex: "há 2 horas")
+ * @param {Date} date - Data a ser formatada
+ * @returns {string} Tempo relativo
+ */
+export const timeAgo = (date) => {
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  const intervals = [
+    { label: 'ano', seconds: 31536000 },
+    { label: 'mês', seconds: 2592000 },
+    { label: 'dia', seconds: 86400 },
+    { label: 'hora', seconds: 3600 },
+    { label: 'minuto', seconds: 60 },
+    { label: 'segundo', seconds: 1 }
+  ];
+
+  for (const interval of intervals) {
+    const count = Math.floor(diffInSeconds / interval.seconds);
+    if (count >= 1) {
+      return `há ${count} ${interval.label}${count > 1 ? 's' : ''}`;
+    }
+  }
+
+  return 'agora mesmo';
+};
