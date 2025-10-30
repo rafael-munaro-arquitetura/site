@@ -3,6 +3,8 @@
  * Funções auxiliares para tarefas comuns
  */
 
+import { logger } from './logger.js';
+
 /**
  * Gera ID único
  * @param {string} prefix - Prefixo opcional para o ID
@@ -19,7 +21,7 @@ export const generateId = (prefix = 'id') => {
  * @param {string} text - Texto a ser copiado
  * @returns {Promise<boolean>} Sucesso da operação
  */
-export const copyToClipboard = async(text) => {
+export const copyToClipboard = async text => {
   try {
     await navigator.clipboard.writeText(text);
     return true;
@@ -36,7 +38,7 @@ export const copyToClipboard = async(text) => {
       return true;
     } catch (fallbackError) {
       document.body.removeChild(textArea);
-      console.error('Erro ao copiar para clipboard:', fallbackError);
+      logger.error('Erro ao copiar para clipboard:', fallbackError);
       return false;
     }
   }
@@ -51,7 +53,7 @@ export const copyToClipboard = async(text) => {
 export const formatCurrency = (value, currency = 'BRL') => {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
-    currency: currency
+    currency: currency,
   }).format(value);
 };
 
@@ -66,7 +68,7 @@ export const formatDate = (date, options = {}) => {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
-    ...options
+    ...options,
   };
 
   return new Intl.DateTimeFormat('pt-BR', defaultOptions).format(new Date(date));
@@ -77,8 +79,8 @@ export const formatDate = (date, options = {}) => {
  * @param {string} str - String a ser formatada
  * @returns {string} String capitalizada
  */
-export const capitalize = (str) => {
-  return str.replace(/\w\S*/g, (txt) => {
+export const capitalize = str => {
+  return str.replace(/\w\S*/g, txt => {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 };
@@ -88,7 +90,7 @@ export const capitalize = (str) => {
  * @param {string} str - String com acentos
  * @returns {string} String sem acentos
  */
-export const removeAccents = (str) => {
+export const removeAccents = str => {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
@@ -97,7 +99,7 @@ export const removeAccents = (str) => {
  * @param {string} str - String a ser convertida
  * @returns {string} Slug da string
  */
-export const slugify = (str) => {
+export const slugify = str => {
   return removeAccents(str)
     .toLowerCase()
     .trim()
@@ -111,7 +113,7 @@ export const slugify = (str) => {
  * @param {string} email - Email a ser validado
  * @returns {boolean} Verdadeiro se válido
  */
-export const isValidEmail = (email) => {
+export const isValidEmail = email => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 };
@@ -121,7 +123,7 @@ export const isValidEmail = (email) => {
  * @param {string} cpf - CPF a ser validado
  * @returns {boolean} Verdadeiro se válido
  */
-export const isValidCPF = (cpf) => {
+export const isValidCPF = cpf => {
   const cleaned = cpf.replace(/\D/g, '');
 
   if (cleaned.length !== 11) return false;
@@ -150,7 +152,7 @@ export const isValidCPF = (cpf) => {
  * @param {string} phone - Telefone a ser formatado
  * @returns {string} Telefone formatado
  */
-export const formatPhone = (phone) => {
+export const formatPhone = phone => {
   const cleaned = phone.replace(/\D/g, '');
 
   if (cleaned.length === 11) {
@@ -192,7 +194,7 @@ export const throttle = (func, limit) => {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };
@@ -212,7 +214,7 @@ export const isElementInViewport = (element, threshold = 0.1) => {
   const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
   const elementHeight = rect.height;
 
-  return (visibleHeight / elementHeight) >= threshold;
+  return visibleHeight / elementHeight >= threshold;
 };
 
 /**
@@ -233,15 +235,32 @@ export const scrollToElement = (element, offset = 0) => {
   window.scrollTo({
     top: offsetPosition,
     // behavior é redundante se CSS já tem scroll-behavior: smooth, mas mantém compatibilidade
-    behavior: 'smooth'
+    behavior: 'smooth',
   });
 };
 
 /**
- * Cria elemento HTML
+ * Sanitiza HTML removendo tags e caracteres perigosos
+ * @param {string} html - HTML a ser sanitizado
+ * @returns {string} HTML sanitizado
+ */
+export const sanitizeHtml = html => {
+  if (typeof html !== 'string') return '';
+
+  return html
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+};
+
+/**
+ * Cria elemento HTML de forma segura (previne XSS)
  * @param {string} tag - Tag do elemento
  * @param {Object} attributes - Atributos do elemento
- * @param {string|Element} content - Conteúdo do elemento
+ * @param {string|Element|Array<Element>} content - Conteúdo do elemento
  * @returns {Element} Elemento criado
  */
 export const createElement = (tag, attributes = {}, content = '') => {
@@ -257,10 +276,47 @@ export const createElement = (tag, attributes = {}, content = '') => {
     }
   });
 
+  // SEGURANÇA: Usar textContent ao invés de innerHTML para strings
   if (typeof content === 'string') {
-    element.innerHTML = content;
+    element.textContent = content;
   } else if (content instanceof Element) {
     element.appendChild(content);
+  } else if (Array.isArray(content)) {
+    // Suporte para array de elementos
+    content.forEach(child => {
+      if (child instanceof Element) {
+        element.appendChild(child);
+      }
+    });
+  }
+
+  return element;
+};
+
+/**
+ * Cria elemento HTML com HTML interno (use apenas para HTML confiável!)
+ * @param {string} tag - Tag do elemento
+ * @param {Object} attributes - Atributos do elemento
+ * @param {string} html - HTML interno (ATENÇÃO: deve ser HTML confiável)
+ * @returns {Element} Elemento criado
+ * @deprecated Use createElement com textContent sempre que possível
+ */
+export const createElementWithHTML = (tag, attributes = {}, html = '') => {
+  const element = document.createElement(tag);
+
+  Object.keys(attributes).forEach(attr => {
+    if (attr === 'className') {
+      element.className = attributes[attr];
+    } else if (attr === 'style' && typeof attributes[attr] === 'object') {
+      Object.assign(element.style, attributes[attr]);
+    } else {
+      element.setAttribute(attr, attributes[attr]);
+    }
+  });
+
+  if (typeof html === 'string') {
+    // AVISO: Isso pode ser inseguro se html vier de usuário!
+    element.innerHTML = html;
   }
 
   return element;
@@ -317,7 +373,7 @@ export const isTouchDevice = () => {
  * @param {string} param - Nome do parâmetro
  * @returns {string|null} Valor do parâmetro ou null
  */
-export const getUrlParameter = (param) => {
+export const getUrlParameter = param => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 };
@@ -337,7 +393,7 @@ export const setUrlParameter = (param, value) => {
  * Remove parâmetro da URL
  * @param {string} param - Nome do parâmetro
  */
-export const removeUrlParameter = (param) => {
+export const removeUrlParameter = param => {
   const url = new URL(window.location);
   url.searchParams.delete(param);
   window.history.replaceState({}, '', url);
@@ -361,7 +417,7 @@ export const saveToStorage = (key, value) => {
     const serialized = JSON.stringify(value);
     localStorage.setItem(key, serialized);
   } catch (error) {
-    console.error('Erro ao salvar no localStorage:', error);
+    logger.error('Erro ao salvar no localStorage:', error);
   }
 };
 
@@ -376,7 +432,7 @@ export const loadFromStorage = (key, defaultValue = null) => {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (error) {
-    console.error('Erro ao carregar do localStorage:', error);
+    logger.error('Erro ao carregar do localStorage:', error);
     return defaultValue;
   }
 };
@@ -385,11 +441,11 @@ export const loadFromStorage = (key, defaultValue = null) => {
  * Remove dados do localStorage
  * @param {string} key - Chave
  */
-export const removeFromStorage = (key) => {
+export const removeFromStorage = key => {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    console.error('Erro ao remover do localStorage:', error);
+    logger.error('Erro ao remover do localStorage:', error);
   }
 };
 
@@ -400,7 +456,7 @@ export const clearStorage = () => {
   try {
     localStorage.clear();
   } catch (error) {
-    console.error('Erro ao limpar localStorage:', error);
+    logger.error('Erro ao limpar localStorage:', error);
   }
 };
 
@@ -414,7 +470,7 @@ export const saveToSessionStorage = (key, value) => {
     const serialized = JSON.stringify(value);
     sessionStorage.setItem(key, serialized);
   } catch (error) {
-    console.error('Erro ao salvar no sessionStorage:', error);
+    logger.error('Erro ao salvar no sessionStorage:', error);
   }
 };
 
@@ -429,7 +485,7 @@ export const loadFromSessionStorage = (key, defaultValue = null) => {
     const item = sessionStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (error) {
-    console.error('Erro ao recuperar do sessionStorage:', error);
+    logger.error('Erro ao recuperar do sessionStorage:', error);
     return defaultValue;
   }
 };
@@ -439,7 +495,7 @@ export const loadFromSessionStorage = (key, defaultValue = null) => {
  * @param {string} phone - Telefone a ser validado
  * @returns {boolean} Verdadeiro se válido
  */
-export const isValidPhone = (phone) => {
+export const isValidPhone = phone => {
   const cleaned = phone.replace(/\D/g, '');
   return cleaned.length >= 10 && cleaned.length <= 11;
 };
@@ -449,7 +505,7 @@ export const isValidPhone = (phone) => {
  * @param {string} cnpj - CNPJ a ser validado
  * @returns {boolean} Verdadeiro se válido
  */
-export const isValidCNPJ = (cnpj) => {
+export const isValidCNPJ = cnpj => {
   const cleaned = cnpj.replace(/\D/g, '');
 
   if (cleaned.length !== 14) return false;
@@ -483,7 +539,7 @@ export const isValidCNPJ = (cnpj) => {
  * @param {string} value - Valor a ser validado
  * @returns {boolean} Verdadeiro se não vazio
  */
-export const isRequired = (value) => {
+export const isRequired = value => {
   return value && value.trim().length > 0;
 };
 
@@ -512,7 +568,7 @@ export const maxLength = (value, maxLength) => {
  * @param {string} cnpj - CNPJ a ser formatado
  * @returns {string} CNPJ formatado
  */
-export const formatCNPJ = (cnpj) => {
+export const formatCNPJ = cnpj => {
   const cleaned = cnpj.replace(/\D/g, '');
   return cleaned.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$2.$3.$4/$1-$5');
 };
@@ -522,7 +578,7 @@ export const formatCNPJ = (cnpj) => {
  * @param {number} num - Número a ser formatado
  * @returns {string} Número formatado
  */
-export const formatNumber = (num) => {
+export const formatNumber = num => {
   return new Intl.NumberFormat('pt-BR').format(num);
 };
 
@@ -549,7 +605,7 @@ export const delegateEvent = (parent, selector, event, handler) => {
 
   if (!parentEl) return;
 
-  parentEl.addEventListener(event, (e) => {
+  parentEl.addEventListener(event, e => {
     const target = e.target.closest(selector);
     if (target) {
       handler.call(target, e);
@@ -563,14 +619,14 @@ export const delegateEvent = (parent, selector, event, handler) => {
  * @param {Object} options - Opções da requisição
  * @returns {Promise} Promise com resposta
  */
-export const httpGet = async(url, options = {}) => {
+export const httpGet = async (url, options = {}) => {
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers
+      ...options.headers,
     },
-    ...options
+    ...options,
   }).then(response => response.json());
 };
 
@@ -581,15 +637,15 @@ export const httpGet = async(url, options = {}) => {
  * @param {Object} options - Opções da requisição
  * @returns {Promise} Promise com resposta
  */
-export const httpPost = async(url, data, options = {}) => {
+export const httpPost = async (url, data, options = {}) => {
   return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers
+      ...options.headers,
     },
     body: JSON.stringify(data),
-    ...options
+    ...options,
   }).then(response => response.json());
 };
 
@@ -600,11 +656,11 @@ export const httpPost = async(url, data, options = {}) => {
  * @param {Object} options - Opções da requisição
  * @returns {Promise} Promise com resposta
  */
-export const httpUpload = async(url, formData, options = {}) => {
+export const httpUpload = async (url, formData, options = {}) => {
   return fetch(url, {
     method: 'POST',
     body: formData,
-    ...options
+    ...options,
   }).then(response => response.json());
 };
 
@@ -634,7 +690,7 @@ export const clamp = (value, min, max) => {
  * @param {number} degrees - Graus
  * @returns {number} Radianos
  */
-export const degreesToRadians = (degrees) => {
+export const degreesToRadians = degrees => {
   return degrees * (Math.PI / 180);
 };
 
@@ -643,7 +699,7 @@ export const degreesToRadians = (degrees) => {
  * @param {number} radians - Radianos
  * @returns {number} Graus
  */
-export const radiansToDegrees = (radians) => {
+export const radiansToDegrees = radians => {
   return radians * (180 / Math.PI);
 };
 
@@ -652,7 +708,7 @@ export const radiansToDegrees = (radians) => {
  * @param {number} ms - Milissegundos
  * @returns {Promise} Promise resolvida após delay
  */
-export const delay = (ms) => {
+export const delay = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
@@ -661,7 +717,7 @@ export const delay = (ms) => {
  * @param {Date} date - Data a ser formatada
  * @returns {string} Tempo relativo
  */
-export const timeAgo = (date) => {
+export const timeAgo = date => {
   const now = new Date();
   const diffInSeconds = Math.floor((now - date) / 1000);
 
@@ -671,7 +727,7 @@ export const timeAgo = (date) => {
     { label: 'dia', seconds: 86400 },
     { label: 'hora', seconds: 3600 },
     { label: 'minuto', seconds: 60 },
-    { label: 'segundo', seconds: 1 }
+    { label: 'segundo', seconds: 1 },
   ];
 
   for (const interval of intervals) {

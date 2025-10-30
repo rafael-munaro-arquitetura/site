@@ -4,9 +4,24 @@
  */
 
 // ===========================================
-// IMPORTS
+// IMPORTS - Hierarquia de Dependências
 // ===========================================
+
+// Estilos CSS - Importados para que Vite os processe corretamente
+import '../styles/components.css';
+import '../styles/footer.css';
+import '../styles/main.css';
+import '../styles/sections.css';
+import '../styles/variables.css';
+
+// Utilitários críticos (sempre carregados primeiro)
 import { debounce, scrollToElement, throttle } from '../utils/helpers.js';
+import { componentLogger, logger, performanceLogger } from '../utils/logger.js';
+
+// Componentes críticos (performance e UX)
+import { HeaderComponent } from '../components/header.js';
+import ScrollReveal from './scroll-reveal.js';
+import TopographicBackground from './topographic-background.js';
 
 // ===========================================
 // CONFIGURAÇÃO E CONSTANTES
@@ -58,119 +73,9 @@ const CONFIG = {
 // ===========================================
 
 /**
- * Classe para gerenciar o header responsivo
+ * HeaderComponent agora importado de ../components/header.js
+ * Implementação completa com WCAG 2.1 AA, focus trap, keyboard navigation
  */
-class HeaderManager {
-  constructor() {
-    this.header = document.querySelector(CONFIG.selectors.header);
-    this.mobileToggle = document.querySelector(CONFIG.selectors.mobileToggle);
-    this.menu = document.querySelector(CONFIG.selectors.menu);
-    this.menuOverlay = document.querySelector('.header__nav-overlay');
-    this.isMenuOpen = false;
-    this.lastScrollY = window.scrollY;
-
-    this.init();
-  }
-
-  init() {
-    if (!this.header || !this.mobileToggle || !this.menu) return;
-
-    // Event listeners
-    this.mobileToggle.addEventListener('click', () => this.toggleMenu());
-
-    if (this.menuOverlay) {
-      this.menuOverlay.addEventListener('click', () => this.closeMenu());
-    }
-
-    document.addEventListener('click', e => this.handleOutsideClick(e));
-    window.addEventListener(
-      'scroll',
-      throttle(() => this.handleScroll(), 10)
-    );
-
-    // Close menu on resize
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        if (window.innerWidth >= CONFIG.breakpoints.mobile) {
-          this.closeMenu();
-        }
-      }, 250)
-    );
-
-    // Ativar links do menu
-    this.initMenuLinks();
-  }
-
-  initMenuLinks() {
-    const menuLinks = this.menu.querySelectorAll('.header__menu-link');
-
-    menuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        // Remove active de todos
-        menuLinks.forEach(l => l.classList.remove('header__menu-link--active'));
-        // Adiciona active ao clicado
-        link.classList.add('header__menu-link--active');
-
-        // Fecha menu mobile se aberto
-        if (this.isMenuOpen) {
-          setTimeout(() => this.closeMenu(), 300);
-        }
-      });
-    });
-  }
-
-  toggleMenu() {
-    this.isMenuOpen ? this.closeMenu() : this.openMenu();
-  }
-
-  openMenu() {
-    this.isMenuOpen = true;
-    this.menu.setAttribute('aria-hidden', 'false');
-    this.mobileToggle.setAttribute('aria-expanded', 'true');
-
-    if (this.menuOverlay) {
-      this.menuOverlay.setAttribute('aria-hidden', 'false');
-    }
-
-    document.body.style.overflow = 'hidden';
-  }
-
-  closeMenu() {
-    this.isMenuOpen = false;
-    this.menu.setAttribute('aria-hidden', 'true');
-    this.mobileToggle.setAttribute('aria-expanded', 'false');
-
-    if (this.menuOverlay) {
-      this.menuOverlay.setAttribute('aria-hidden', 'true');
-    }
-
-    document.body.style.overflow = '';
-  }
-
-  handleOutsideClick(event) {
-    if (
-      !this.menu.contains(event.target) &&
-      !this.mobileToggle.contains(event.target) &&
-      this.isMenuOpen
-    ) {
-      this.closeMenu();
-    }
-  }
-
-  handleScroll() {
-    const currentScrollY = window.scrollY;
-
-    // Add/remove sticky class
-    if (currentScrollY > 50) {
-      this.header.classList.add('header--sticky');
-    } else {
-      this.header.classList.remove('header--sticky');
-    }
-
-    this.lastScrollY = currentScrollY;
-  }
-}
 
 /**
  * Classe para gerenciar o botão "Voltar ao Topo"
@@ -225,14 +130,18 @@ class BackToTopManager {
  */
 class ScrollAnimationManager {
   constructor() {
+    // Observar tanto elementos data-animate quanto classes reveal
     this.animatedElements = document.querySelectorAll('[data-animate]');
+    this.revealElements = document.querySelectorAll(
+      '.reveal, .reveal-left, .reveal-right, .reveal-scale'
+    );
     this.observedElements = new Set();
 
     this.init();
   }
 
   init() {
-    if (!this.animatedElements.length) return;
+    if (!this.animatedElements.length && !this.revealElements.length) return;
 
     const observer = new IntersectionObserver(
       entries => {
@@ -249,14 +158,34 @@ class ScrollAnimationManager {
       }
     );
 
+    // Observar elementos data-animate
     this.animatedElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    // Observar elementos com classes reveal
+    this.revealElements.forEach(element => {
       observer.observe(element);
     });
   }
 
   animateElement(element) {
-    const animationType = element.dataset.animate || 'fade-in';
-    element.classList.add(`animate-${animationType}`);
+    // Para elementos data-animate: adicionar classe animate-*
+    if (element.hasAttribute('data-animate')) {
+      const animationType = element.dataset.animate || 'fade-in';
+      element.classList.add(`animate-${animationType}`);
+    }
+
+    // Para elementos com classes reveal: adicionar classe revealed
+    const hasRevealClass =
+      element.classList.contains('reveal') ||
+      element.classList.contains('reveal-left') ||
+      element.classList.contains('reveal-right') ||
+      element.classList.contains('reveal-scale');
+
+    if (hasRevealClass) {
+      element.classList.add('revealed');
+    }
   }
 }
 
@@ -305,7 +234,7 @@ class ContactFormManager {
       this.showSuccessMessage();
       this.form.reset();
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
+      componentLogger.error('ContactFormManager', error);
       this.showErrorMessage('Erro ao enviar mensagem. Tente novamente.');
     } finally {
       this.setSubmitting(false);
@@ -373,7 +302,9 @@ class ContactFormManager {
     // Simulação de delay da API
     return new Promise(resolve => {
       setTimeout(() => {
-        console.log('Formulário enviado:', data);
+        componentLogger.event('ContactFormManager', 'form_submitted', {
+          fields_count: Object.keys(data).length,
+        });
         resolve({ success: true });
       }, 2000);
     });
@@ -561,8 +492,11 @@ class App {
     // Inicializar loading
     this.hideLoading();
 
-    // Inicializar componentes
-    this.initComponents();
+    // Fase 1: Componentes críticos (performance e UX imediata)
+    this.initCriticalComponents();
+
+    // Fase 2: Componentes não-críticos (lazy loading)
+    this.initNonCriticalComponents();
 
     // Configurar navegação suave
     this.initSmoothScrolling();
@@ -573,7 +507,40 @@ class App {
     // Configurar tema (futuro)
     this.initTheme();
 
-    console.log('🚀 Rafael Munaro Arquitetura - Aplicação inicializada');
+    componentLogger.initialized('App');
+  }
+
+  initCriticalComponents() {
+    // Componentes que afetam performance crítica e UX imediata
+    this.components.topographicBackground = new TopographicBackground({
+      maxLines: 3,
+      spawnInterval: 5000,
+      colors: ['rgba(155, 161, 135, 1)', 'rgba(84, 89, 67, 1)', 'rgba(232, 218, 203, 1)'],
+    });
+
+    this.components.header = new HeaderComponent();
+    this.components.backToTop = new BackToTopManager();
+    this.components.scrollAnimation = new ScrollAnimationManager();
+
+    componentLogger.initialized('Critical components');
+  }
+
+  initNonCriticalComponents() {
+    // Componentes que podem ser carregados após a página estar visível
+    // Usando requestIdleCallback para melhor performance
+    const initWhenIdle = () => {
+      this.components.scrollReveal = new ScrollReveal();
+      this.components.contactForm = new ContactFormManager();
+      this.components.portfolio = new PortfolioManager();
+      componentLogger.initialized('Non-critical components');
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initWhenIdle);
+    } else {
+      // Fallback para browsers que não suportam
+      setTimeout(initWhenIdle, 100);
+    }
   }
 
   hideLoading() {
@@ -583,23 +550,6 @@ class App {
         loading.hidden = true;
       }, 500);
     }
-  }
-
-  initComponents() {
-    // Header responsivo
-    this.components.header = new HeaderManager();
-
-    // Botão voltar ao topo
-    this.components.backToTop = new BackToTopManager();
-
-    // Animações de scroll
-    this.components.scrollAnimation = new ScrollAnimationManager();
-
-    // Formulário de contato
-    this.components.contactForm = new ContactFormManager();
-
-    // Filtros do portfólio
-    this.components.portfolio = new PortfolioManager();
   }
 
   initSmoothScrolling() {
@@ -613,7 +563,7 @@ class App {
 
           // Fechar menu mobile se estiver aberto
           if (this.components.header?.isMenuOpen) {
-            this.components.header.closeMenu();
+            this.components.header.closeMobileMenu();
           }
         }
       });
@@ -661,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('performance' in window) {
     window.addEventListener('load', () => {
       const perfData = performance.getEntriesByType('navigation')[0];
-      console.log(`⏱️ Página carregada em ${perfData.loadEventEnd - perfData.loadEventStart}ms`);
+      performanceLogger.pageLoad(perfData.loadEventEnd - perfData.loadEventStart);
     });
   }
 });
@@ -671,11 +621,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===========================================
 
 window.addEventListener('error', event => {
-  console.error('❌ Erro global:', event.error);
+  logger.error('Erro global:', event.error);
   // Aqui você pode enviar para serviço de monitoramento como Sentry
 });
 
 window.addEventListener('unhandledrejection', event => {
-  console.error('❌ Promise rejeitada:', event.reason);
+  logger.error('Promise rejeitada:', event.reason);
   // Aqui você pode enviar para serviço de monitoramento
 });

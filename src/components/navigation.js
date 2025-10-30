@@ -4,13 +4,14 @@
  */
 
 import { debounce, throttle, addClass, removeClass } from '../utils/helpers.js';
+import { componentLogger } from '../utils/logger.js';
 
 export class NavigationComponent {
   constructor(options = {}) {
     this.options = {
       updateInterval: 100,
       headerOffset: 100,
-      ...options
+      ...options,
     };
 
     this.header = null;
@@ -27,7 +28,7 @@ export class NavigationComponent {
     this.bindEvents();
     this.updateActiveSection();
 
-    console.log('Navigation component initialized');
+    componentLogger.initialized('NavigationComponent');
   }
 
   cacheElements() {
@@ -35,7 +36,7 @@ export class NavigationComponent {
     this.menuLinks = Array.from(document.querySelectorAll('.header__menu-link[href^="#"]'));
 
     if (!this.header) {
-      console.warn('Header element not found');
+      componentLogger.error('NavigationComponent', 'Header element not found');
     }
   }
 
@@ -46,32 +47,41 @@ export class NavigationComponent {
       id: section.id,
       element: section,
       top: section.offsetTop,
-      height: section.offsetHeight
+      height: section.offsetHeight,
     }));
 
-    console.log(`Discovered ${this.sections.length} navigable sections:`, this.sections.map(s => s.id));
+    componentLogger.event('NavigationComponent', 'sections_discovered', {
+      count: this.sections.length,
+      sections: this.sections.map(s => s.id),
+    });
   }
 
   bindEvents() {
     // Scroll event to update active section (throttled)
-    window.addEventListener('scroll', throttle(() => {
-      this.updateActiveSection();
-    }, this.options.updateInterval));
+    window.addEventListener(
+      'scroll',
+      throttle(() => {
+        this.updateActiveSection();
+      }, this.options.updateInterval)
+    );
 
     // Resize event to recalculate section positions
-    window.addEventListener('resize', debounce(() => {
-      this.recalculateSections();
-    }, 250));
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.recalculateSections();
+      }, 250)
+    );
 
     // Menu link clicks
     this.menuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', e => {
         this.handleMenuLinkClick(e, link);
       });
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       this.handleKeyboardNavigation(e);
     });
   }
@@ -88,7 +98,7 @@ export class NavigationComponent {
       // Dispatch custom event
       this.dispatchEvent('navigation:sectionChanged', {
         sectionId: targetId,
-        triggeredBy: 'menuClick'
+        triggeredBy: 'menuClick',
       });
     }
   }
@@ -98,11 +108,11 @@ export class NavigationComponent {
     if (event.altKey) {
       const key = event.key.toLowerCase();
       const shortcuts = {
-        '1': 'home',
-        '2': 'about',
-        '3': 'services',
-        '4': 'portfolio',
-        '5': 'contact'
+        1: 'home',
+        2: 'about',
+        3: 'services',
+        4: 'portfolio',
+        5: 'contact',
       };
 
       if (shortcuts[key]) {
@@ -122,7 +132,6 @@ export class NavigationComponent {
 
     window.scrollTo({
       top: targetPosition,
-      
     });
 
     // Update URL hash without triggering scroll
@@ -138,8 +147,7 @@ export class NavigationComponent {
 
     // Find the current section based on scroll position
     for (const section of this.sections) {
-      if (currentPosition >= section.top &&
-          currentPosition < section.top + section.height) {
+      if (currentPosition >= section.top && currentPosition < section.top + section.height) {
         activeSectionId = section.id;
         break;
       }
@@ -157,7 +165,7 @@ export class NavigationComponent {
       // Dispatch custom event
       this.dispatchEvent('navigation:sectionChanged', {
         sectionId: activeSectionId,
-        triggeredBy: 'scroll'
+        triggeredBy: 'scroll',
       });
     }
 
@@ -197,11 +205,12 @@ export class NavigationComponent {
 
   updateScrollProgress() {
     // Optional: Update scroll progress indicator
-    const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = (window.pageYOffset / scrollHeight) * 100;
 
     // Dispatch progress event
     this.dispatchEvent('navigation:scrollProgress', {
-      progress: Math.min(scrolled, 100)
+      progress: Math.min(scrolled, 100),
     });
   }
 
@@ -213,7 +222,7 @@ export class NavigationComponent {
   getSections() {
     return this.sections.map(section => ({
       id: section.id,
-      title: this.getSectionTitle(section.id)
+      title: this.getSectionTitle(section.id),
     }));
   }
 
@@ -223,7 +232,7 @@ export class NavigationComponent {
       about: 'Sobre',
       services: 'Serviços',
       portfolio: 'Portfólio',
-      contact: 'Contato'
+      contact: 'Contato',
     };
     return titles[sectionId] || sectionId;
   }
@@ -264,14 +273,14 @@ export class NavigationComponent {
       breadcrumbs.push({
         title: 'Início',
         url: '#home',
-        current: currentSection.id === 'home'
+        current: currentSection.id === 'home',
       });
 
       if (currentSection.id !== 'home') {
         breadcrumbs.push({
           title: this.getSectionTitle(currentSection.id),
           url: `#${currentSection.id}`,
-          current: true
+          current: true,
         });
       }
     }
@@ -283,8 +292,8 @@ export class NavigationComponent {
     const event = new CustomEvent(eventName, {
       detail: {
         component: this,
-        ...detail
-      }
+        ...detail,
+      },
     });
 
     document.dispatchEvent(event);
@@ -296,7 +305,7 @@ export class NavigationComponent {
       link.removeEventListener('click', this.handleMenuLinkClick);
     });
 
-    console.log('Navigation component destroyed');
+    componentLogger.event('NavigationComponent', 'destroyed');
   }
 }
 
@@ -306,7 +315,7 @@ NavigationComponent.keyboardShortcuts = {
   'Alt + 2': 'Ir para Sobre',
   'Alt + 3': 'Ir para Serviços',
   'Alt + 4': 'Ir para Portfólio',
-  'Alt + 5': 'Ir para Contato'
+  'Alt + 5': 'Ir para Contato',
 };
 
 // Auto-initialize if DOM is ready

@@ -2,6 +2,9 @@
    BASE.CSS - Design System Foundation
    ========================================================================== */
 
+/* Import design tokens from variables.css */
+@import url('./variables.css');
+
 /* CSS Reset & Normalization */
 *,
 *::before,
@@ -9,111 +12,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-/* Design Tokens - Paleta de Cores */
-:root {
-  /* Primary Colors */
-  --color-moss: #545943;
-  --color-moss-light: #9BA187;
-  --color-beige: #E8DACB;
-  --color-terracotta: #B66C48;
-  --color-terracotta-dark: #8C421E;
-  
-  /* Semantic Colors */
-  --color-primary: var(--color-moss);
-  --color-primary-light: var(--color-moss-light);
-  --color-accent: var(--color-terracotta);
-  --color-accent-dark: var(--color-terracotta-dark);
-  --color-neutral: var(--color-beige);
-  
-  /* Grayscale */
-  --color-white: #FFFFFF;
-  --color-gray-50: #FAFAFA;
-  --color-gray-100: #F5F5F5;
-  --color-gray-200: #EEEEEE;
-  --color-gray-300: #E0E0E0;
-  --color-gray-400: #BDBDBD;
-  --color-gray-500: #9E9E9E;
-  --color-gray-600: #757575;
-  --color-gray-700: #616161;
-  --color-gray-800: #424242;
-  --color-gray-900: #212121;
-  --color-black: #000000;
-  
-  /* Typography Scale (Perfect Fourth 1.333) */
-  --font-size-xs: 0.75rem;      /* 12px */
-  --font-size-sm: 0.875rem;     /* 14px */
-  --font-size-base: 1rem;       /* 16px */
-  --font-size-md: 1.125rem;     /* 18px */
-  --font-size-lg: 1.333rem;     /* 21px */
-  --font-size-xl: 1.777rem;     /* 28px */
-  --font-size-2xl: 2.369rem;    /* 38px */
-  --font-size-3xl: 3.157rem;    /* 50px */
-  --font-size-4xl: 4.209rem;    /* 67px */
-  --font-size-5xl: 5.61rem;     /* 90px */
-  
-  /* Font Families */
-  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
-  
-  /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-  --font-weight-black: 900;
-  
-  /* Spacing Scale (4px base) */
-  --space-1: 0.25rem;   /* 4px */
-  --space-2: 0.5rem;    /* 8px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.25rem;   /* 20px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-8: 2rem;      /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-20: 5rem;     /* 80px */
-  --space-24: 6rem;     /* 96px */
-  --space-32: 8rem;     /* 128px */
-  
-  /* Border Radius */
-  --radius-sm: 0.25rem;   /* 4px */
-  --radius-md: 0.5rem;    /* 8px */
-  --radius-lg: 1rem;      /* 16px */
-  --radius-xl: 1.5rem;    /* 24px */
-  --radius-full: 9999px;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
-  
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Z-Index Scale */
-  --z-base: 1;
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-fixed: 300;
-  --z-modal-backdrop: 400;
-  --z-modal: 500;
-  --z-popover: 600;
-  --z-tooltip: 700;
-  
-  /* Layout */
-  --container-max: 1280px;
-  --container-padding: var(--space-6);
-  --header-height: 80px;
 }
 
 /* Base HTML Styles */
@@ -126,21 +24,26 @@ html {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-family-primary);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-normal);
   line-height: 1.6;
-  color: var(--color-gray-900);
-  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
   overflow-x: hidden;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-secondary);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
-  color: var(--color-gray-900);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-4);
 }
 
@@ -172,7 +75,7 @@ h6 {
 
 p {
   margin-bottom: var(--space-4);
-  color: var(--color-gray-700);
+  color: var(--color-text-secondary);
 }
 
 /* Links */
@@ -183,11 +86,12 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent);
+  color: var(--color-brand-accent);
 }
 
 /* Lists */
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -219,8 +123,8 @@ select {
 
 /* Selection */
 ::selection {
-  background-color: var(--color-accent);
-  color: var(--color-white);
+  background-color: var(--color-brand-accent);
+  color: var(--color-text-inverse);
 }
 
 /* Scrollbar - Webkit */
@@ -229,25 +133,25 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-gray-100);
+  background: var(--color-neutral-100);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gray-400);
-  border-radius: var(--radius-full);
+  background: var(--color-neutral-400);
+  border-radius: var(--border-radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gray-500);
+  background: var(--color-neutral-500);
 }
 
 /* Utility Classes */
 .container {
-  max-width: var(--container-max);
+  max-width: var(--container-7xl);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
 }
 
 /* Screen Reader Only */
@@ -278,7 +182,12 @@ select {
 }
 
 /* Ensure all main content elements are above canvas */
-header, nav, main, section, footer, .container {
+header,
+nav,
+main,
+section,
+footer,
+.container {
   position: relative;
   z-index: 1;
 }

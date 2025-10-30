@@ -3,11 +3,12 @@
  * Manages the behavior and interactivity of the footer
  */
 
+import { componentLogger } from '../utils/logger.js';
 
 export class FooterComponent {
   constructor(options = {}) {
     this.options = {
-      ...options
+      ...options,
     };
 
     this.footer = null;
@@ -19,14 +20,14 @@ export class FooterComponent {
     this.cacheElements();
     this.bindEvents();
 
-    console.log('Footer component initialized');
+    componentLogger.initialized('FooterComponent');
   }
 
   cacheElements() {
     this.footer = document.querySelector('.footer');
 
     if (!this.footer) {
-      console.warn('Footer element not found');
+      componentLogger.error('FooterComponent', 'Footer element not found');
     }
   }
 
@@ -43,7 +44,7 @@ export class FooterComponent {
     if (!socialLinks) return;
 
     socialLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', e => {
         this.handleSocialLinkClick(e, link);
       });
     });
@@ -54,7 +55,7 @@ export class FooterComponent {
     const url = link.getAttribute('href');
 
     // Track social media clicks (future analytics integration)
-    console.log(`Social media click: ${platform}`);
+    componentLogger.event('FooterComponent', 'social_link_click', { platform });
 
     // Open in new tab for external links
     if (url && url.startsWith('http')) {
@@ -75,8 +76,8 @@ export class FooterComponent {
     const event = new CustomEvent(eventName, {
       detail: {
         component: this,
-        ...detail
-      }
+        ...detail,
+      },
     });
 
     document.dispatchEvent(event);
@@ -84,7 +85,7 @@ export class FooterComponent {
 
   destroy() {
     // Cleanup event listeners if needed
-    console.log('Footer component destroyed');
+    componentLogger.event('FooterComponent', 'destroyed');
   }
 }
 

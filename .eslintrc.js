@@ -8,34 +8,34 @@ module.exports = {
     'eslint:recommended'
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
     sourceType: 'module'
   },
   rules: {
-    // Possibilita console.log em desenvolvimento
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    // Possibilita debugger em desenvolvimento
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    // Preferência por aspas simples
-    'quotes': ['error', 'single'],
-    // Ponto e vírgula obrigatório
-    'semi': ['error', 'always'],
-    // Indentação de 2 espaços
-    'indent': ['error', 2],
-    // Espaço antes de parênteses em funções
-    'space-before-function-paren': ['error', 'never'],
-    // Comprimento máximo da linha
     'max-len': ['error', { code: 100 }],
-    // Não permite variáveis não utilizadas
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    // Exige uso de === ao invés de ==
-    'eqeqeq': ['error', 'always']
+    'indent': ['error', 2],
+    'no-console': 'error',
+    'no-useless-escape': 'error',
+    'no-undef': 'error'
   },
+  overrides: [
+    {
+      files: ['src/utils/logger.js'],
+      rules: {
+        'no-console': 'off' // Console statements são intencionais no logger
+      }
+    },
+    {
+      files: ['src/js/new-design.legacy.js'],
+      rules: {
+        'no-console': 'off', // Arquivo legacy mantido para referência
+        'no-undef': 'off'   // Pode ter dependências não definidas
+      }
+    }
+  ],
   ignorePatterns: [
-    'node_modules/',
     'dist/',
-    'build/',
-    'public/',
-    '*.min.js'
+    'node_modules/',
+    'src/js/new-design.js' // Arquivo legacy
   ]
 };

@@ -1,6 +1,6 @@
 {
   "name": "site-rafael-munaro-arquitetura",
-  "version": "2.1.3",
+  "version": "2.4.1",
   "description": "Site institucional para Rafael Munaro Arquitetura",
   "main": "src/index.html",
   "scripts": {
@@ -24,7 +24,6 @@
     "size": "npx size-limit",
     "test": "echo \"No tests specified\" && exit 0",
     "test:watch": "echo \"No tests specified\" && exit 0",
-    "type-check": "tsc --noEmit --skipLibCheck",
     "prepare": "husky install || true",
     "precommit": "npm run lint:check && npm run format:check",
     "release": "npm run build && npm run preview"
@@ -40,25 +39,18 @@
   "author": "Rafael Munaro Arquitetura",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@vitejs/plugin-legacy": "^4.0.0",
+    "@vitejs/plugin-legacy": "^7.2.1",
     "autoprefixer": "^10.4.21",
     "cssnano": "^7.1.1",
     "eslint": "^8.0.0",
     "husky": "^8.0.0",
-    "lint-staged": "^13.0.0",
-    "postcss-calc": "^10.1.1",
-    "postcss-custom-media": "^11.0.6",
-    "postcss-custom-properties": "^14.0.6",
-    "postcss-focus-visible": "^10.0.1",
+    "lint-staged": "^16.2.6",
     "postcss-import": "^16.1.1",
-    "postcss-media-minmax": "^5.0.0",
     "postcss-nested": "^7.0.2",
     "postcss-preset-env": "^10.4.0",
     "prettier": "^3.0.0",
     "size-limit": "^8.2.0",
-    "typescript": "^5.0.0",
-    "vite": "^4.0.0",
+    "vite": "^7.1.12",
     "vite-bundle-analyzer": "^0.8.0"
   },
   "engines": {

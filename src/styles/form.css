@@ -1,0 +1,203 @@
+/**
+ * Form Styles - Rafael Munaro Arquitetura
+ * Estilos para formulários de contato
+ *
+ * @version 1.0.0
+ * @author Rafael Munaro Arquitetura
+ */
+
+/* === CONTACT SECTION === */
+.contact {
+  padding: var(--section-padding-y) var(--section-padding-x) calc(var(--section-padding-y) + 8px);
+  margin-bottom: 0;
+}
+
+.contact__container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact__header {
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.contact__title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 16px;
+  color: var(--color-moss);
+}
+
+.contact__title-accent {
+  color: var(--color-terracotta);
+}
+
+.contact__subtitle {
+  font-size: 1rem;
+  color: #666;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* === CONTACT FORM === */
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact__form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.contact__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact__form-fullwidth {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-moss);
+  letter-spacing: 0.02em;
+}
+
+.contact__input,
+.contact__select,
+.contact__textarea {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-family: var(--font-family-primary);
+  font-size: 0.9375rem;
+  color: var(--color-moss);
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.contact__input:hover,
+.contact__select:hover,
+.contact__textarea:hover {
+  border-color: var(--color-terracotta);
+  background: #fff;
+}
+
+.contact__input:focus,
+.contact__select:focus,
+.contact__textarea:focus {
+  border-color: var(--color-terracotta);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(182, 108, 72, 0.1);
+}
+
+.contact__input:focus,
+.contact__select:focus {
+  border-color: #e0e0e0;
+  background: #fafafa;
+  box-shadow: none;
+}
+
+.contact__select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%23545943%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.contact__textarea {
+  min-height: 120px;
+  padding: 16px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.contact__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.contact__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 48px;
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--color-terracotta);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(182, 108, 72, 0.2);
+}
+
+.contact__submit:hover {
+  background: #a85d3d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(182, 108, 72, 0.3);
+}
+
+.contact__submit:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(182, 108, 72, 0.2);
+}
+
+/* === FORM MESSAGE === */
+.form-message {
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.form-message--success {
+  display: none;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .contact {
+    padding: 32px 24px 48px;
+  }
+
+  .contact__header {
+    margin-bottom: 28px;
+  }
+
+  .contact__form-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .contact__submit {
+    width: 100%;
+    padding: 0 32px;
+  }
+}

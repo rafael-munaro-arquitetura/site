@@ -5,13 +5,14 @@
 
 import { addClass, removeClass } from '../utils/helpers.js';
 import { debounce, throttle } from '../utils/helpers.js';
+import { componentLogger } from '../utils/logger.js';
 
 export class HeaderComponent {
   constructor(options = {}) {
     this.options = {
       stickyOffset: 100,
       mobileBreakpoint: 768,
-      ...options
+      ...options,
     };
 
     this.header = null;
@@ -29,7 +30,7 @@ export class HeaderComponent {
     this.bindEvents();
     this.setupAccessibility();
 
-    console.log('Header component initialized');
+    componentLogger.initialized('HeaderComponent');
   }
 
   cacheElements() {
@@ -38,7 +39,7 @@ export class HeaderComponent {
     this.menu = document.querySelector('.header__menu');
 
     if (!this.header) {
-      console.warn('Header element not found');
+      componentLogger.error('HeaderComponent', 'Header element not found');
       return;
     }
   }
@@ -48,29 +49,35 @@ export class HeaderComponent {
 
     // Mobile menu toggle
     if (this.mobileToggle) {
-      this.mobileToggle.addEventListener('click', (e) => {
+      this.mobileToggle.addEventListener('click', e => {
         e.preventDefault();
         this.toggleMobileMenu();
       });
     }
 
     // Scroll events (throttled)
-    window.addEventListener('scroll', throttle(() => {
-      this.handleScroll();
-    }, 10));
+    window.addEventListener(
+      'scroll',
+      throttle(() => {
+        this.handleScroll();
+      }, 10)
+    );
 
     // Resize events (debounced)
-    window.addEventListener('resize', debounce(() => {
-      this.handleResize();
-    }, 250));
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.handleResize();
+      }, 250)
+    );
 
     // Outside click to close menu
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       this.handleOutsideClick(e);
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       this.handleKeydown(e);
     });
 
@@ -83,7 +90,7 @@ export class HeaderComponent {
     if (!menuLinks) return;
 
     menuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', e => {
         e.preventDefault();
         const targetId = link.getAttribute('href');
         const targetElement = document.querySelector(targetId);
@@ -232,7 +239,6 @@ export class HeaderComponent {
 
     window.scrollTo({
       top: targetPosition,
-      
     });
   }
 
@@ -263,8 +269,8 @@ export class HeaderComponent {
     const event = new CustomEvent(eventName, {
       detail: {
         component: this,
-        ...detail
-      }
+        ...detail,
+      },
     });
 
     document.dispatchEvent(event);
@@ -286,7 +292,7 @@ export class HeaderComponent {
   destroy() {
     // Remove event listeners and cleanup
     this.closeMobileMenu();
-    console.log('Header component destroyed');
+    componentLogger.event('HeaderComponent', 'destroyed');
   }
 }
 

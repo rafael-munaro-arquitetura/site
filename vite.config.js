@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   // Base path for the application
@@ -35,6 +35,8 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
+    // Force rebuild
+    watch: null,
     // Target browsers
     target: 'es2015',
     // CSS code splitting
@@ -76,8 +78,7 @@ export default defineConfig({
 
   // Plugin configuration
   plugins: [
-    // Add plugins here as needed
-    // Example: legacy plugin for older browsers
+    // Legacy plugin for older browsers (if needed)
     // legacy({
     //   targets: ['defaults', 'not IE 11'],
     // }),

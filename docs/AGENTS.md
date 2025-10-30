@@ -243,8 +243,7 @@ site_rafael-munaro-arquitetura/
 │   │   └── images/          # Imagens otimizadas
 │   │
 │   ├── js/                   # 📜 JavaScript
-│   │   ├── main.js          # Sistema principal
-│   │   ├── new-design.js    # ⭐ Sistema de design novo
+│   │   ├── main.js          # ⭐ Sistema principal unificado
 │   │   └── topographic-background.js # ⭐ Animação de fundo
 │   │
 │   ├── styles/               # 🎨 CSS modular
