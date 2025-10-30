@@ -1,0 +1,142 @@
+/**
+ * ContactSection Styles - Design Premium e Minimalista
+ * Seção de contato elegante e profissional
+ */
+
+.contact-section {
+  background: var(--color-white);
+  padding: var(--space-16) 0;
+}
+
+.contact-intro {
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-700);
+  max-width: 800px;
+  margin: 0 auto var(--space-12);
+  line-height: var(--line-height-relaxed);
+  font-weight: var(--font-weight-normal);
+}
+
+/* === LAYOUT MINIMALISTA === */
+.contact-content-minimal {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.contact-info-minimal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  border-left: 3px solid transparent;
+}
+
+.contact-item:hover {
+  background: rgba(84, 89, 67, 0.03);
+  border-left-color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+.contact-item-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  background: rgba(182, 108, 72, 0.08);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.contact-item:hover .contact-item-icon {
+  background: var(--color-accent);
+  color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.contact-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.contact-item-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.contact-item-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+.contact-item-value:hover {
+  color: var(--color-accent);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: var(--space-12) 0;
+  }
+
+  .contact-intro {
+    margin-bottom: var(--space-10);
+  }
+
+  .contact-content-minimal {
+    max-width: 100%;
+  }
+
+  .contact-item {
+    padding: var(--space-4);
+  }
+
+  .contact-item-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-item-value {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: var(--space-10) 0;
+  }
+
+  .contact-intro {
+    margin-bottom: var(--space-8);
+  }
+
+  .contact-item {
+    gap: var(--space-4);
+  }
+
+  .contact-item-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
