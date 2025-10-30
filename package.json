@@ -67,7 +67,7 @@
     "vite-bundle-analyzer": "^0.8.0"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": "22.20.0",
     "npm": ">=8.0.0"
   },
   "browserslist": [
