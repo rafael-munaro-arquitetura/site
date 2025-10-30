@@ -93,7 +93,7 @@ jspm_packages/
 
 # Gatsby files
 .cache/
-public
+# public (removed to allow static assets in Vite)
 
 # Storybook build outputs
 .out
