@@ -1,0 +1,104 @@
+.card {
+  position: relative;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    var(--color-accent-alpha-10) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.card-hoverable:hover::before {
+  opacity: 1;
+}
+
+.card-hoverable:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+.card-tilt {
+  transform-style: preserve-3d;
+  transition: transform var(--transition-slow) ease-out,
+    box-shadow var(--transition-base);
+  will-change: transform;
+}
+
+/* Variantes de Card */
+.card-primary {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+}
+
+.card-secondary {
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary) 0%,
+    var(--color-secondary-light) 100%
+  );
+  color: var(--color-black);
+}
+
+.card-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-glass-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left var(--transition-slower);
+  pointer-events: none;
+}
+
+.card-glass:hover .card-glass-shine {
+  left: 100%;
+}
+
+/* Suporte para dispositivos touch */
+@media (hover: none) {
+  .card-tilt {
+    transform: none !important;
+  }
+}
+
+/* Suporte para prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card-tilt {
+    transition: none;
+    transform: none !important;
+  }
+
+  .card-glass-shine {
+    display: none;
+  }
+}

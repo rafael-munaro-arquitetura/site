@@ -1,0 +1,65 @@
+/* Esconder cursor padrão em desktop */
+@media (pointer: fine) {
+  body * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  position: fixed;
+  top: -4px;
+  left: -4px;
+  pointer-events: none;
+  z-index: var(--z-max);
+  transition: width var(--transition-fast), height var(--transition-fast),
+    background-color var(--transition-fast);
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-dot.clicking {
+  width: 12px;
+  height: 12px;
+  background: var(--color-accent-dark);
+}
+
+.custom-cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-full);
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  pointer-events: none;
+  z-index: var(--z-max);
+  transition: width var(--transition-base), height var(--transition-base),
+    border-color var(--transition-base), opacity var(--transition-base),
+    transform var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.6;
+}
+
+.custom-cursor-outline.hovering {
+  width: 60px;
+  height: 60px;
+  opacity: 0.9;
+  border-color: var(--color-primary);
+}
+
+.custom-cursor-outline.clicking {
+  width: 30px;
+  height: 30px;
+  opacity: 1;
+  border-width: 3px;
+}
+
+/* Evitar cursor customizado em dispositivos touch */
+@media (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-outline {
+    display: none;
+  }
+}
